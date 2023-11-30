@@ -1,12 +1,12 @@
 
 import './App.css'
+import Register from './components/Register'
 
 function App() {
   
   return (
     <>
-      <h2>xd</h2>
-      <p>prueba dev-matias</p>
+      <Register/>
     </>
   )
 }
