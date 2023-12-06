@@ -1,12 +1,12 @@
 import { IconFilter } from '../../components/icons/IconFilter'
 import { PinsList } from '../../components/Perfil/PinsList'
-import { ButtonGray } from '../../components/ui/ButtonGray'
 import { IconAdd } from '../../components/icons/IconAdd'
+import { Button } from '../../components/ui/Button'
 
 export function PerfilPage () {
 
     return (
-        <section className='w-full flex flex-col items-center pt-24 pb-12'>
+        <section className='w-full flex flex-col items-center '>
 
             <div className='flex flex-col gap-y-2.5 items-center mb-4'>
                 <img src='https://placehold.co/140x140' className='rounded-full'/>
@@ -15,26 +15,26 @@ export function PerfilPage () {
             </div>
 
             <div className='flex items-center gap-x-2 mb-10'>
-                <ButtonGray>
+                <Button>
                     Editar perfil
-                </ButtonGray>
-                <ButtonGray>
+                </Button>
+                <Button>
                     Crear
-                </ButtonGray>
+                </Button>
             </div>
             
             <div className='flex items-center gap-x-2 '>
                 <button className='px-4 py-2 border-b-2 border-black'>
                     Creados
                 </button>
-                <ButtonGray className='text-base'>
+                <Button className='text-base'>
                     Favoritos
-                </ButtonGray>
+                </Button>
             </div>
 
             <div className='w-full flex items-center justify-between mb-6'>
-                <ButtonGray className='rounded-full'><IconFilter /></ButtonGray>
-                <ButtonGray className='rounded-full'><IconAdd /></ButtonGray>
+                <Button><IconFilter /></Button>
+                <Button><IconAdd /></Button>
             </div>
 
             <PinsList />
