@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className='container mx-auto'>
+      <main className='container mx-auto pt-24 pb-12'>
 
         <Routes>
 

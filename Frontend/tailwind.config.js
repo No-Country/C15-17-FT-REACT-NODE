@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors : {
-        
+        'border-box' : '#CDCDCD',
+        primary : '#3498db'
       }
     },
   },
