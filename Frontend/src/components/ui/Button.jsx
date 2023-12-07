@@ -24,7 +24,7 @@ export function Button ({ children, type, className, color }) {
 
 
     return (
-        <button type={typeFormat} className={`px-4 py-2 rounded-xl ${colorFormat.color} ${colorFormat.hover} ${className} font-medium transition-all`}>
+        <button type={typeFormat} className={`px-4 py-2 rounded-3xl ${colorFormat.color} ${colorFormat.hover} ${className} font-medium transition-all`}>
             { children }
         </button>
     )

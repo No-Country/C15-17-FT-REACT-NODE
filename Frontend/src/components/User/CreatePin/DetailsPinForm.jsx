@@ -15,7 +15,7 @@ export function DetailPinForm () {
                 <label className="text-sm" htmlFor="description">Descripción</label>
                 <textarea 
                 placeholder="Agrega una descripción detallada"
-                type='text' className="border-border-box border-2 rounded-xl px-4 py-2 focus:outline-primary w-full resize-none h-24" name="description"/>
+                type='text' className="border-border-box border-2 rounded-3xl px-4 py-2 focus:outline-primary w-full resize-none h-24" name="description"/>
             </div>
             <div className="flex flex-col gap-y-2">
                 <label className="text-sm" htmlFor="team">Equipo</label>

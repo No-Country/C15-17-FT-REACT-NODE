@@ -3,9 +3,9 @@ import { Input } from "../../UI/Input";
 
 export function EditPerfilForm () {
     return (
-      <form className="py-6">
+      <form className="pt-6 pb-4 w-full flex flex-col gap-y-4 items-start ">
 
-        <div className="mb-4">
+        <div className="lg:mb-">
           <label className="text-sm">Foto</label>
           <div className="flex items-center gap-x-4">
             <img src='https://placehold.co/100x100' className='rounded-full'/>
@@ -13,7 +13,7 @@ export function EditPerfilForm () {
           </div>
         </div>
 
-        <section className="flex flex-col gap-y-2 lg:gap-y-4">
+        <section className="flex flex-col gap-y-2 lg:gap-y-4 w-full">
 
           <div className="flex gap-x-4 items-center">
 
@@ -41,7 +41,7 @@ export function EditPerfilForm () {
             <label className="text-sm">Descripción</label>
             <textarea 
                 placeholder="Contá sobre vos"
-                type='text' className="border-border-box border-2 rounded-xl px-4 py-2 focus:outline-primary w-full resize-none h-24" name="description"/>
+                type='text' className="border-border-box border-2 rounded-3xl px-4 py-2 focus:outline-primary w-full resize-none h-24" name="description"/>
           </div>
 
           <div className="flex flex-col gap-y-2">

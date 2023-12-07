@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export function EditPerfilPage() {
   return (
-      <section className="flex items-start gap-x-12   border-t border-border-box relative h-[calc(100vh-100px)]">
+      <section className="flex items-start gap-x-12   border-t border-border-box relative h-[calc(100vh-100px)] px-4 lg:px-0">
 
         <aside className="border-r border-b border-border-box w-24 py-6 h-full hidden md:flex">
           <section className="h-12 border-b border-border-box w-full flex justify-center ">
