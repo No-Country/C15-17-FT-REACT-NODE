@@ -108,3 +108,18 @@ form {
   width: 200px;
   background-color: #333;
 }
+
+
+/* Mansory Gallery */
+
+.gallery {
+  columns: 2;
+  column-gap : 0.6em;
+  row-gap: 0.6em;
+}
+
+@media (min-width: 1024px) {
+  .gallery {
+    columns: 4
+  }
+}

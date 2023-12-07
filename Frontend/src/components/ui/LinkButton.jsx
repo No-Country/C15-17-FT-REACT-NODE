@@ -15,7 +15,7 @@ export function LinkButton({ children, href, color, className }) {
     const colorFormat = !color ? buttonColors.gray : (color !== 'blue' && color !== 'gray') ? buttonColors.gray : buttonColors[color];
 
     return (
-        <Link to={href} className={` px-4 py-2 rounded-xl ${colorFormat.color} ${colorFormat.hover} ${className} font-medium transition-all`}>
+        <Link to={href} className={` px-4 py-2 rounded-3xl ${colorFormat.color} ${colorFormat.hover} ${className} font-medium transition-all`}>
             {children}
         </Link>
     );
