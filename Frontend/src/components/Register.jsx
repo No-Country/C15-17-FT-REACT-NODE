@@ -16,7 +16,7 @@ const Register = () => {
 
     return (
         <div className='content'>
-            <h1>inicia sesión</h1>
+            <h1>Registrarte</h1>
             <form onSubmit={handlerSubmit}>
                 <div className='content_label'>
                     <label className='form_label'>
