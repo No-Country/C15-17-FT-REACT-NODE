@@ -1,110 +1,110 @@
 :root {
-    --color-background: #f0f0f0;
-    --color-primary: #3498db;
-    --color-secondary: #e3c200;
-    --color-text: #333333;
-    --color-accent: #ff5555;
+  --color-background: #f0f0f0;
+  --color-primary: #3498db;
+  --color-secondary: #e3c200;
+  --color-text: #333333;
+  --color-accent: #ff5555;
 }
 
 /* LOGIN */
 .content {
-    background: rgb(52, 152, 219);
-    background: linear-gradient(
-        45deg,
-        var(--color-primary) 0%,
-        var(--color-background) 43%,
-        var(--color-background) 62%,
-        var(--color-primary) 100%
-    );
-    color: #333;
-    height: 100vh;
-    width: 100%;
-    max-width: 430px;
+  background: rgb(52, 152, 219);
+  background: linear-gradient(
+      45deg,
+      var(--color-primary) 0%,
+      var(--color-background) 43%,
+      var(--color-background) 62%,
+      var(--color-primary) 100%
+  );
+  color: #333;
+  height: 100vh;
+  width: 100%;
+  max-width: 430px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .content h1 {
-    text-transform: uppercase;
-    margin: 20px;
-    font-size: 28px;
+  text-transform: uppercase;
+  margin: 20px;
+  font-size: 28px;
 }
 
 form {
-    height: 70%;
-    width: 80%;
+  height: 70%;
+  width: 80%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 .content_label {
-    width: 100%;
+  width: 100%;
 }
 .content_label .form_label {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
 }
 
 .label_span {
-    font-size: 18px;
-    margin-left: 10px;
+  font-size: 18px;
+  margin-left: 10px;
 }
 .input_form {
-    background-color: #fff;
-    color: #222;
-    font-size: 20px;
-    padding-left: 10px;
-    height: 40px;
-    width: 100%;
-    margin-top: 5px;
-    outline: none;
-    border: none;
+  background-color: #fff;
+  color: #222;
+  font-size: 20px;
+  padding-left: 10px;
+  height: 40px;
+  width: 100%;
+  margin-top: 5px;
+  outline: none;
+  border: none;
 
-    box-shadow: 7px 5px 9px -4px rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: 7px 5px 9px -4px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 7px 5px 9px -4px rgba(0, 0, 0, 0.75);
+  box-shadow: 7px 5px 9px -4px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 7px 5px 9px -4px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 7px 5px 9px -4px rgba(0, 0, 0, 0.75);
 }
 .input_form:focus {
-    border-bottom: 3px solid #3498db;
+  border-bottom: 3px solid #3498db;
 }
 .content_btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 .content_btn .btn {
-    height: 40px;
-    width: 200px;
-    margin: 5px;
-    border: none;
-    outline: none;
-    text-transform: uppercase;
-    font-size: 22px;
-    font-weight: bold;
+  height: 40px;
+  width: 200px;
+  margin: 5px;
+  border: none;
+  outline: none;
+  text-transform: uppercase;
+  font-size: 22px;
+  font-weight: bold;
 }
 .btn.login {
-    background-color: var(--color-primary);
+  background-color: var(--color-primary);
 }
 .btn.register {
-    background-color: var(--color-secondary);
-    color: var(--color-text);
+  background-color: var(--color-secondary);
+  color: var(--color-text);
 }
 .content_divisor {
-    display: flex;
-    width: 180px;
-    align-items: center;
+  display: flex;
+  width: 180px;
+  align-items: center;
 }
 .content_divisor .text{
-    margin: 5px;
+  margin: 5px;
 }
 .content_divisor .divisor {
-    height: 1px;
-    width: 200px;
-    background-color: #333;
+  height: 1px;
+  width: 200px;
+  background-color: #333;
 }
