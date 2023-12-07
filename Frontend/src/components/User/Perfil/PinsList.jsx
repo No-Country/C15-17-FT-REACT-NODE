@@ -1,4 +1,4 @@
-import { usePins } from "../../store/pins/pins.store"
+import { usePins } from "../../../store/pins/pins.store"
 import { Pin } from "./Pin"
 
 export function PinsList () {
