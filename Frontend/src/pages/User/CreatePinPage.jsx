@@ -1,5 +1,5 @@
-import { DetailPinForm } from "../../components/CreatePin/DetailsPinForm";
-import { UploadPinForm } from "../../components/CreatePin/UploadPinForm";
+import { DetailPinForm } from "../../components/User/CreatePin/DetailsPinForm";
+import { UploadPinForm } from "../../components/User/CreatePin/UploadPinForm";
 import { Button } from "../../components/ui/Button";
 
 export function CreatePinPage () {

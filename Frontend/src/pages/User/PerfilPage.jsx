@@ -1,12 +1,13 @@
+import { PinsList } from '../../components/User/Perfil/PinsList'
 import { IconFilter } from '../../components/icons/IconFilter'
-import { PinsList } from '../../components/Perfil/PinsList'
+import { LinkButton } from '../../components/UI/LinkButton'
 import { IconAdd } from '../../components/icons/IconAdd'
 import { Button } from '../../components/ui/Button'
 
 export function PerfilPage () {
 
     return (
-        <section className='w-full flex flex-col items-center '>
+        <section className='w-full flex flex-col items-center pb-12'>
 
             <div className='flex flex-col gap-y-2.5 items-center mb-4'>
                 <img src='https://placehold.co/140x140' className='rounded-full'/>
@@ -15,12 +16,12 @@ export function PerfilPage () {
             </div>
 
             <div className='flex items-center gap-x-2 mb-10'>
-                <Button>
+                <LinkButton href='/settings-perfil'>
                     Editar perfil
-                </Button>
-                <Button>
+                </LinkButton>
+                <LinkButton href='/pin-create'>
                     Crear
-                </Button>
+                </LinkButton>
             </div>
             
             <div className='flex items-center gap-x-2 '>
