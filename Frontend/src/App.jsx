@@ -3,36 +3,45 @@ import { Routes, Route } from 'react-router-dom'
 
 //Pages
 import { EditPerfilPage } from './pages/User/EditPerfilPage'
+import { DetailPagePin } from './pages/home/DetailPinPage'
 import { CreatePinPage } from './pages/User/CreatePinPage'
 import { PerfilPage } from './pages/User/PerfilPage'
 import { HomePage } from './pages/home/HomePage'
+import Register from './pages/auth/Register'
 import Login from './pages/auth/Login'
 
-//Components
-import { Header } from './components/shared/Header'
-import { NavBar } from './components/shared/NavBar'
+//Layouts
+import { HomeLayout } from './layouts/HomeLayout'
+import { AuthLayout } from './layouts/AuthLayout'
+
+
 
 function App() {
   return (
     <>
-      <Header />
-      <main className='container mx-auto pt-20 pb-12 lg:pb-0'>
 
         <Routes>
+          <Route path='/' element={<HomeLayout />}>
+          
+            <Route index element={<HomePage />}/>
+            <Route path='pin-create' element={<CreatePinPage />}/>
+            <Route path='settings-perfil' element={<EditPerfilPage />}/>
+            <Route path='perfil' element={<PerfilPage />}/>
+            <Route path='pin/:id' element={<DetailPagePin />}/>
 
-          <Route path='/' element={<HomePage />}/>
+          </Route>
 
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/auth' element={<AuthLayout />}>
 
-          <Route path='/pin-create' element={<CreatePinPage />}/>
-          <Route path='/settings-perfil' element={<EditPerfilPage />}/>
-          <Route path='/perfil' element={<PerfilPage />}/>
+            <Route path='login' element={<Login/>}/>
+            <Route path='register' element={<Register/>}/>
+
+          </Route>
+
 
           
         </Routes>
 
-      </main>
-      <NavBar />
     </>
   )
 }

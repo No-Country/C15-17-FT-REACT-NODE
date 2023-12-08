@@ -123,3 +123,9 @@ form {
     columns: 4
   }
 }
+
+@media (min-width: 1440px) {
+  .gallery {
+    columns: 5
+  }
+}
