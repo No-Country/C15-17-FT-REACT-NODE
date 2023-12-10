@@ -1,10 +1,10 @@
-const { Router } = require('express')
-const post=require("./postRoute")
-const login=require("./loginRoute")
+import express from 'express';
+import postRouter from './postRoute.js';
+import loginRouter from './loginRoute.js';
 
-const router = Router()
+const router = express.Router();
 
-router.use("/login", login)
-router.use("/post", post)
+router.use("/login", loginRouter);
+router.use("/publication", postRouter);
 
-module.exports = router
+export default router;

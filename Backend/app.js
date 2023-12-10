@@ -1,30 +1,37 @@
-require('dotenv').config({})
-const express = require('express')
-const router = require('./src/router')
-const PORT = process.env.PORT ?? 3001
-const CLIENT_PATH = __dirname.split('api')[0] + 'app/dist'
-const isProduction = process.env.NODE_ENV === 'production'
+import express from 'express';
+import cors from 'cors';
+import router from './src/router/index.js';
+import "./options.js"
+import dotenv from 'dotenv';
+dotenv.config();
+
+
+const corsOptions = {
+  origin: process.env.ROOT_CLIENT, //YOU ROOT APP REACT/REACT NATIVE
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+};
 
 const app = express()
 
-app.use(express.json())
+app.use(express.json());
+app.use(cors(corsOptions));
 
-if (isProduction) {
+/* if (isProduction) {
   app.use(express.static(CLIENT_PATH))
-}
+} */
 
 app.use('/', router)
 
-if (isProduction) {
+/* if (isProduction) {
   app.get('*', (_req, res) => {
     res.sendFile(CLIENT_PATH + '/index.html')
   })
-}
+} */
 
+const PORT = 8080;
 
-
-
-
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`server running on PORT: ${PORT}`)
-})
+});
+server.on("error", err => console.log(err));
