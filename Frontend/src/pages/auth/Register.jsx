@@ -12,7 +12,9 @@ const Register = () => {
 
     const URL = "URL A MODIFICAR";
 
-    const onHandleRegister = async () => {
+    const onHandleRegister = async (e) => {
+        e.preventDefault();
+        
         console.log("Se Preciono button");
 
         if (password && username && email) {
@@ -22,7 +24,7 @@ const Register = () => {
                     email: email,
                     password: password,
                 };
-
+                console.log(userData)
                 const response = await fetch(URL, {
                     method: "POST",
                     headers: {
@@ -55,7 +57,7 @@ const Register = () => {
                     <label className='form_label'>
                         <span className='label_span'>Usuario</span>
                         <input
-                            onChange={(user) => setUsername(user)}
+                            onChange={(e) => setUsername(e.target.value)}
                             name='usuario'
                             type='text'
                             className='input_form'
@@ -65,7 +67,7 @@ const Register = () => {
                     <label className='form_label'>
                         <span className='label_span'>Email</span>
                         <input
-                            onChange={(email) => setEmail(email)}
+                            onChange={(e) => setEmail(e.target.value)}
                             name='email'
                             type='email'
                             className='input_form'
@@ -75,7 +77,7 @@ const Register = () => {
                     <label className='form_label'>
                         <span className='label_span'>Contraseña</span>
                         <input
-                            onChange={(password) => setPassword(password)}
+                            onChange={(e) => setPassword(e.target.value)}
                             name='password'
                             type='password'
                             className='input_form'
