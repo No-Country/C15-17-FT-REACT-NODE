@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { IconAdd } from "../icons/IconAdd";
 import { IconGrid } from "../icons/IconGrid";
 import { IconHome } from "../icons/IconHome";
+import { IconUser } from "../icons/IconUser";
 
 export function NavBar () {
     return (
@@ -10,7 +11,7 @@ export function NavBar () {
             <Link to="/"><IconGrid /></Link>
             <Link to="/pin-create"><IconAdd /></Link>
             <Link to='/perfil'>
-                    <img src='https://placehold.co/30x30' className='rounded-full'/>
+                <IconUser />
             </Link>
         </div>
     )
