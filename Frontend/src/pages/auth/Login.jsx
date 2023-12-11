@@ -1,23 +1,55 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Login = () => {
-    const [login, setLogin] = useState({})
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    function handlerSubmit(e) {
+    const navigation = useNavigate();
+
+    const URL = "URL A MODIFICAR";
+
+    const onHandleLogin = async (e) => {
         e.preventDefault();
-        const usuario = {
-            usuario: e.target.usuario.value,
-            password: e.target.password.value,
+        setIsLoading(true);
+
+        try {
+            const userData = {
+                usuario: username,
+                password: password,
+            };
+
+            const response = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userData),
+            });
+            const responseData = await response.json();
+            console.log(responseData);
+
+            if (responseData) {
+                setUsername("");
+                setPassword("");
+                setIsLoading(false);
+                // retornar error al usuario 
+                return;
+            }
+
+            if (isLoading) navigation("/home");
+
+        } catch (error) {
+            console.error(error);
+            Alert.alert("Error", "Ocurrió un error al iniciar sesión.");
         }
-        setLogin(usuario);
-    }
-    
-    console.log(login);
+    };
 
     return (
         <div className='content'>
             <h1>inicia sesión</h1>
-            <form onSubmit={handlerSubmit}>
+            <form onSubmit={onHandleLogin}>
                 <div className='content_label'>
                     <label className='form_label'>
                         <span className='label_span'>Usuario</span>
@@ -25,6 +57,7 @@ const Login = () => {
                             name='usuario'
                             type='text'
                             className='input_form'
+                            value={username}
                         />
                     </label>
                     <label className='form_label'>
@@ -33,6 +66,7 @@ const Login = () => {
                             name='password'
                             type='password'
                             className='input_form'
+                            value={password}
                         />
                     </label>
                 </div>
