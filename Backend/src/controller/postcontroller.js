@@ -46,3 +46,17 @@ export const newPublication = async (req, res) => {
         return res.status(400).send({ message: error })        
     }
 };
+
+
+export const deletePublication = async (req, res) => {
+    try {
+        if (await publications.findOne({_id: req.params.id })) {
+            await publications.deleteOne({ _id: req.params.id });
+
+            return res.status(201).json({ message: "Publicacion eliminada correctamente"})
+        }
+        return res.status(404).json({message: "La publicacion que desea eliminar no existe"});
+    } catch (error) {
+        res.status(404).json({message: error});
+    }
+};

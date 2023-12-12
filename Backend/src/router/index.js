@@ -4,7 +4,7 @@ import loginRouter from './loginRoute.js';
 
 const router = express.Router();
 
-router.use("/login", loginRouter);
+router.use("/auth", loginRouter);
 router.use("/publication", postRouter);
 
 export default router;

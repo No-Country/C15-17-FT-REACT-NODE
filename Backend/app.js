@@ -21,7 +21,7 @@ app.use(cors(corsOptions));
   app.use(express.static(CLIENT_PATH))
 } */
 
-app.use('/', router)
+app.use('/api', router)
 
 /* if (isProduction) {
   app.get('*', (_req, res) => {
