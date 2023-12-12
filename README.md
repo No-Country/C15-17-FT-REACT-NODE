@@ -5,12 +5,12 @@
 > # PictureFlow 
 
 ### Integrantes
-######  -  Emiliano Cabanillas
-###### -  Ezequiel Colicoy
-###### -  Ezequiel Soto
-###### -  Jazmin Oballos
-###### -  Matias Cabrera
-###### -  Alejandra Chaves  
+######  - Emiliano Cabanillas - Front
+###### -  Ezequiel Colicoy - Back
+###### -  Ezequiel Soto - Front
+###### -  Jazmin Oballos - QA
+###### -  Matias Cabrera - Front
+###### -  Alejandra Chaves  - QA
 
 > #### PictureFlow es una plataforma social en línea donde incorporamos diferentes funcionalidades que permiten a los usuarios explorar, guardar y compartir contenido visual de manera intuitiva de futbolistas Argentinos. Los usuarios pueden crear "tableros" temáticos y agregar "pines" que representan imágenes o enlaces relacionados con sus intereses. Estos tableros y pines actúan como colecciones visuales que los usuarios pueden explorar y compartir. La plataforma utiliza un diseño de cuadrícula para mostrar imágenes de manera atractiva, facilitando la exploración de contenido visual.
 
