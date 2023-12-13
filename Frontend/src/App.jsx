@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom'
 import { EditPerfilPage } from './pages/User/EditPerfilPage'
 import { DetailPagePin } from './pages/home/DetailPinPage'
 import { CreatePinPage } from './pages/User/CreatePinPage'
+import { LandingPage } from './pages/home/LandingPage'
 import { PerfilPage } from './pages/User/PerfilPage'
 import { HomePage } from './pages/home/HomePage'
 import Register from './pages/auth/Register'
@@ -14,7 +15,7 @@ import Login from './pages/auth/Login'
 import { HomeLayout } from './layouts/HomeLayout'
 import { AuthLayout } from './layouts/AuthLayout'
 
-
+const  isAuth = true // test auth
 
 function App() {
   return (
@@ -23,7 +24,10 @@ function App() {
         <Routes>
           <Route path='/' element={<HomeLayout />}>
           
-            <Route index element={<HomePage />}/>
+            <Route index element={
+              isAuth ? <HomePage />
+              : <LandingPage />
+            }/>
             <Route path='pin-create' element={<CreatePinPage />}/>
             <Route path='settings-perfil' element={<EditPerfilPage />}/>
             <Route path='perfil' element={<PerfilPage />}/>
