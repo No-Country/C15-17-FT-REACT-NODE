@@ -110,6 +110,12 @@ form {
 }
 
 
+/* Hero Radial Gradient */
+.bg-radial-white {
+  background : linear-gradient(rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 70%)
+}
+
+
 /* Mansory Gallery */
 
 .gallery {
@@ -129,3 +135,4 @@ form {
     columns: 5
   }
 }
+
