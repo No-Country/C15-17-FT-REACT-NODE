@@ -14,38 +14,36 @@ import Login from './pages/auth/Login'
 //Layouts
 import { HomeLayout } from './layouts/HomeLayout'
 import { AuthLayout } from './layouts/AuthLayout'
-
-const  isAuth = true // test auth
+import { AuthProvider } from './context/AuthProvider'
 
 function App() {
+
   return (
     <>
+      <AuthProvider>
+          <Routes>
+            <Route path='/' element={<HomeLayout />}>
 
-        <Routes>
-          <Route path='/' element={<HomeLayout />}>
-          
-            <Route index element={
-              isAuth ? <HomePage />
-              : <LandingPage />
-            }/>
-            <Route path='pin-create' element={<CreatePinPage />}/>
-            <Route path='settings-perfil' element={<EditPerfilPage />}/>
-            <Route path='perfil' element={<PerfilPage />}/>
-            <Route path='pin/:id' element={<DetailPagePin />}/>
+              <Route index element={<LandingPage />}/>
+              <Route path='home' element={<HomePage />}/>
+              <Route path='pin-create' element={<CreatePinPage />}/>
+              <Route path='settings-perfil' element={<EditPerfilPage />}/>
+              <Route path='perfil' element={<PerfilPage />}/>
+              <Route path='pin/:id' element={<DetailPagePin />}/>
 
-          </Route>
+            </Route>
 
-          <Route path='/auth' element={<AuthLayout />}>
+            <Route path='/auth' element={<AuthLayout />}>
 
-            <Route path='login' element={<Login/>}/>
-            <Route path='register' element={<Register/>}/>
+              <Route path='login' element={<Login/>}/>
+              <Route path='register' element={<Register/>}/>
 
-          </Route>
+            </Route>
 
 
-          
-        </Routes>
-
+            
+          </Routes>
+      </AuthProvider>
     </>
   )
 }
