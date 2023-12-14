@@ -10,11 +10,11 @@ const Register = () => {
 
     const navigation = useNavigate();
 
-    const URL = "URL A MODIFICAR";
+    const URL = "http://localhost:8080/api/auth/register";
 
     const onHandleRegister = async (e) => {
         e.preventDefault();
-        
+                
         console.log("Se Preciono button");
 
         if (password && username && email) {
@@ -36,7 +36,8 @@ const Register = () => {
                 const responseData = await response.json();
                 console.log(responseData);
 
-                if (responseData) navigation("/login");
+                if (responseData) navigation("/auth/login");
+                
             } catch (error) {
                 // Manejar errores, como mostrar un mensaje de error al usuario.
                 console.error(error);
@@ -52,7 +53,7 @@ const Register = () => {
     return (
         <div className='content'>
             <h1>Registrarte</h1>
-            <form onSubmit={onHandleRegister}>
+            <form >
                 <div className='content_label'>
                     <label className='form_label'>
                         <span className='label_span'>Usuario</span>
@@ -86,7 +87,7 @@ const Register = () => {
                     </label>
                 </div>
                 <div className='content_btn'>
-                    <button type='submit' className='btn register'>
+                    <button type='submit' className='btn register' onClick={onHandleRegister}>
                         Registrarme
                     </button>
                     <div className='content_divisor'>
