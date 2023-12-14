@@ -31,7 +31,6 @@ export const signUp = async (req, res) => {
 /* login */
 export const signIn = async (req, res) => {
     const { name, password } = req.body;
-    console.log(name)
     if (!name) {
         return res.status(400).send({ error: "user vacío" });
     } else if (!password) {
@@ -39,17 +38,17 @@ export const signIn = async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ name: name });
+        const user = await User.findOne({ email: name });
         
-        if (user) {
-            const matchPassword = await bcrypt.compare(password, user.password);
+        if (!user) return res.status(404).send("Usuario no encontrado, revisa el correo o regístrate");
+
+        const matchPassword = await bcrypt.compare(password, user.password);
             
-            if (matchPassword) {
-                const acess_token = generateToken(user)
-                return res.status(200).json({acess_token, user: user.name, logged: "true" });
-            }
-        }
-        return res.status(404).send("Usuario no encontrado, revisa el correo o regístrate");
+        const acess_token = generateToken(user)
+
+        console.log(acess_token)
+        return res.status(200).json({acess_token, user: user.name, logged: "true" });
+        
     } catch (error) {
         console.log(error);
         return res.status(500).send("Error interno del servidor");
