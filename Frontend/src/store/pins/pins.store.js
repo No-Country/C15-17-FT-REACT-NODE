@@ -21,7 +21,10 @@ export const usePins = create((get, set) => ({
             id : state.pins.length + 1,
             image : 'https://img.freepik.com/fotos-premium/hombre-patea-futbol-entrenamiento-futbol-campo-deportivo-al-aire-libre-juego-competencia-o-entrenamiento-motivacion-objetivo-ejercicio-fisico-piernas-fuertes-atleta-o-deporte-estilo-vida-cesped-estadio_590464-100054.jpg?w=740'
         }]
-    }))
+    })),
+
+    isAuth: false,
+    setIsAuth : (isAuth) => set({isAuth}),
 
 
 }))

@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { usePins } from "../../store/pins/pins.store";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
+    const {isAuth, setIsAuth } = usePins()
+
     const navigation = useNavigate();
 
-    const URL = "URL A MODIFICAR";
+    const URL = "http://localhost:8080/api/auth/login";
 
     const onHandleLogin = async (e) => {
         e.preventDefault();
@@ -16,8 +19,8 @@ const Login = () => {
 
         try {
             const userData = {
-                usuario: username,
-                password: password,
+                name: username,
+                password: password
             };
 
             const response = await fetch(URL, {
@@ -27,6 +30,8 @@ const Login = () => {
                 },
                 body: JSON.stringify(userData),
             });
+
+            console.log(userData); // <-- Objeto vacio
             const responseData = await response.json();
             console.log(responseData);
 
@@ -34,12 +39,11 @@ const Login = () => {
                 setUsername("");
                 setPassword("");
                 setIsLoading(false);
-                // retornar error al usuario 
+                // retornar error al usuario
                 return;
             }
 
-            if (isLoading) navigation("/home");
-
+            if (isLoading) navigation("/");
         } catch (error) {
             console.error(error);
             Alert.alert("Error", "Ocurrió un error al iniciar sesión.");
@@ -57,7 +61,7 @@ const Login = () => {
                             name='usuario'
                             type='text'
                             className='input_form'
-                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
                     </label>
                     <label className='form_label'>
@@ -66,7 +70,7 @@ const Login = () => {
                             name='password'
                             type='password'
                             className='input_form'
-                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>
                 </div>

@@ -9,7 +9,7 @@ export const signUp = async (req, res) => {
         const { name, email, password } = req.body;
         console.log(req.body)
 
-        if (!(await User.findOne({email: email}))) {
+        if (!(await User.findOne({name: name}))) {
             const passwordHash = await bcrypt.hash(password, 10)
 
             const newUser = new User ({
@@ -30,23 +30,23 @@ export const signUp = async (req, res) => {
 
 /* login */
 export const signIn = async (req, res) => {
-    const { email, password } = req.body;
-
-    if (!email) {
-        return res.status(400).send({ error: "Correo vacío" });
+    const { name, password } = req.body;
+    console.log(name)
+    if (!name) {
+        return res.status(400).send({ error: "user vacío" });
     } else if (!password) {
         return res.status(400).send({ error: "Contraseña vacía" });
     }
 
     try {
-        const user = await User.findOne({ email: email });
+        const user = await User.findOne({ name: name });
         
         if (user) {
             const matchPassword = await bcrypt.compare(password, user.password);
             
             if (matchPassword) {
                 const acess_token = generateToken(user)
-                return res.status(200).json({acess_token, user: user.email, logged: "true" });
+                return res.status(200).json({acess_token, user: user.name, logged: "true" });
             }
         }
         return res.status(404).send("Usuario no encontrado, revisa el correo o regístrate");
