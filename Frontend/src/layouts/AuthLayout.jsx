@@ -6,8 +6,7 @@ export function AuthLayout () {
 
     const { isAuth } = useAuth()
 
-    if(isAuth) return <Navigate to='/home' />
-    console.log(isAuth)
+    if(isAuth) return <Navigate to='/' />
     return (
         <main>
             <Outlet />

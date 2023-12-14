@@ -24,7 +24,6 @@ export function ButtonIcon ({ children, type, className, color }) {
 
     const colorFormat = !color ? buttonColors.gray : (color !== 'blue' && color !== 'gray') ? buttonColors.gray : buttonColors[color];
 
-    console.log(colorFormat)
 
     return (
         <button type={typeFormat} className={`p-0.5 rounded-full  ${colorFormat.color} ${colorFormat.hover} transition-all ${className}`}>

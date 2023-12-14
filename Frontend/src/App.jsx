@@ -14,18 +14,20 @@ import Login from './pages/auth/Login'
 //Layouts
 import { HomeLayout } from './layouts/HomeLayout'
 import { AuthLayout } from './layouts/AuthLayout'
-import { AuthProvider } from './context/AuthProvider'
+
+//Hook
+import { useAuth } from './hooks/useAuth'
 
 function App() {
 
+  const { isAuth } = useAuth()
+
   return (
     <>
-      <AuthProvider>
           <Routes>
             <Route path='/' element={<HomeLayout />}>
 
-              <Route index element={<LandingPage />}/>
-              <Route path='home' element={<HomePage />}/>
+              <Route index element={ isAuth ? <HomePage /> : <LandingPage />}/>
               <Route path='pin-create' element={<CreatePinPage />}/>
               <Route path='settings-perfil' element={<EditPerfilPage />}/>
               <Route path='perfil' element={<PerfilPage />}/>
@@ -43,7 +45,6 @@ function App() {
 
             
           </Routes>
-      </AuthProvider>
     </>
   )
 }
