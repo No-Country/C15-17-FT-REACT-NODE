@@ -23,8 +23,4 @@ export const usePins = create((get, set) => ({
         }]
     })),
 
-    isAuth: false,
-    setIsAuth : (isAuth) => set({isAuth}),
-
-
 }))

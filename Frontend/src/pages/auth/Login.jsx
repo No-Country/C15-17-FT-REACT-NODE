@@ -1,53 +1,28 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { usePins } from "../../store/pins/pins.store";
+import { useAuth } from "../../store/auth/auth.store";
 
 const Login = () => {
+
+
+    const { singin } = useAuth()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
 
-    const {isAuth, setIsAuth } = usePins()
-
-    const navigation = useNavigate();
-
-    const URL = "http://localhost:8080/api/auth/login";
 
     const onHandleLogin = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
 
-        try {
-            const userData = {
-                name: username,
-                password: password
-            };
-
-            const response = await fetch(URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(userData),
-            });
-
-            console.log(userData); // <-- Objeto vacio
-            const responseData = await response.json();
-            console.log(responseData);
-
-            if (responseData) {
-                setUsername("");
-                setPassword("");
-                setIsLoading(false);
-                // retornar error al usuario
-                return;
-            }
-
-            if (isLoading) navigation("/");
-        } catch (error) {
-            console.error(error);
-            Alert.alert("Error", "Ocurrió un error al iniciar sesión.");
+        if(!username || !password)  {
+            alert('deberia llenar los datos')
+            return
         }
+
+        const credentials = {
+            name: username,
+            password: password
+        }
+       await singin(credentials)
+
     };
 
     return (

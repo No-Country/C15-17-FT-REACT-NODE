@@ -1,51 +1,35 @@
+
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const Register = () => {
+
+
+    const { signup } = useAuth()
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const [isError, setIsError] = useState(false);
 
-    const navigation = useNavigate();
 
-    const URL = "http://localhost:8080/api/auth/register";
 
     const onHandleRegister = async (e) => {
         e.preventDefault();
-                
-        console.log("Se Preciono button");
-
-        if (password && username && email) {
-            try {
-                const userData = {
-                    name: username,
-                    email: email,
-                    password: password,
-                };
-                console.log(userData)
-                const response = await fetch(URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(userData),
-                });
-
-                const responseData = await response.json();
-                console.log(responseData);
-
-                if (responseData) navigation("/auth/login");
-                
-            } catch (error) {
-                // Manejar errores, como mostrar un mensaje de error al usuario.
-                console.error(error);
-            }
-        } else {
-            setIsError(true);
-            console.log("Faltan datos.");
+        
+        if(!username || !email || !password) {
+            alert('Deberia llenar los campos')
+            return
         }
+
+        const credentials = {
+            name: username,
+            email: email,
+            password: password,
+        };
+
+        await signup(credentials)
+        
+       
     };
 
     // Dar estilos a inputs cuando isError sea true

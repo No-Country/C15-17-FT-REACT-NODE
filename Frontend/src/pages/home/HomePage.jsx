@@ -1,12 +1,18 @@
+import { Navigate } from "react-router-dom"
 import { IconAdd } from "../../components/icons/IconAdd"
 import { PinList } from "../../components/shared/PinList"
 import { LinkIcon } from "../../components/ui/LinkIcon"
+import { useAuth } from "../../hooks/useAuth"
 import { usePins } from "../../hooks/usePins"
 
 export function HomePage () {
 
+
+    const { isAuth } = useAuth()
     const { data, isLoading, isError } = usePins()
 
+
+    if(!isAuth) return <Navigate to='/'/>
 
     if(isLoading) return <p>Cargando...</p>
     if(isError) return <p>Hubo un error...</p>

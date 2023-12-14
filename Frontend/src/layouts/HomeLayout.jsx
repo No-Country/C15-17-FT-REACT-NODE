@@ -1,11 +1,12 @@
 import { Header } from "../components/shared/Header";
 import { NavBar } from "../components/shared/NavBar";
 import { Outlet } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
-const  isAuth = true // test auth
 
 export function HomeLayout() {
 
+  const { isAuth } = useAuth()
   
   return (
     <>
