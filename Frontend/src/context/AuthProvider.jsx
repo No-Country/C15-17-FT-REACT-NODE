@@ -1,17 +1,18 @@
-import Cookies from "js-cookie";
-import { useEffect } from "react";
-import { useState } from "react";
-import { createContext } from "react";
-import { jwtDecode } from 'jwt-decode'
 import { getUser } from "../services/user.services";
 import { api } from "../services/auth.services";
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { createContext } from "react";
+import { jwtDecode } from 'jwt-decode'
+
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext({});
 
 const expires = new Date(new Date().getTime() + 10 * 60 * 1000);
 
 export function AuthProvider ({ children }) {
-
+    const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const [data, setData] = useState({
         user : {},
@@ -22,7 +23,6 @@ export function AuthProvider ({ children }) {
         (async () => {
           setIsLoading(true);
           const token = Cookies.get("token");
-          console.log(token)
     
           if (!token) {
             setData({
@@ -42,7 +42,6 @@ export function AuthProvider ({ children }) {
                 isAuth : true
             });
             setIsLoading(true)
-            console.log(isLoading)
 
           } catch (error) {
             console.error("Error en el servidor: ", error);
@@ -50,7 +49,6 @@ export function AuthProvider ({ children }) {
                 user : {},
                 isAuth : false
             });
-            
           } finally {
             setIsLoading(false);
           }
@@ -70,6 +68,8 @@ export function AuthProvider ({ children }) {
                     user : user,
                     isAuth : true
                 });
+
+                navigate('/')
     
             } catch (error) {
                 console.log(error)
@@ -92,6 +92,8 @@ export function AuthProvider ({ children }) {
                     user : user,
                     isAuth : true
                 });
+
+                navigate('/')
             } catch (error) {
                 console.log(error)
                 setData({
