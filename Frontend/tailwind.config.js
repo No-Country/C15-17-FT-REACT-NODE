@@ -8,7 +8,12 @@ export default {
     extend: {
       colors : {
         'border-box' : '#CDCDCD',
-        primary : '#3498db'
+        primary : '#3498db',
+        'sky-light' : '#DAFFF6',
+        'green-dark' : '#006B6C'
+      },
+      backgroundImage : {
+        'grid-players' : 'url(/images/grid.webp)'
       }
     },
   },

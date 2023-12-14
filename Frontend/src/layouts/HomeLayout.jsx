@@ -2,17 +2,22 @@ import { Header } from "../components/shared/Header";
 import { NavBar } from "../components/shared/NavBar";
 import { Outlet } from "react-router-dom";
 
+const  isAuth = true // test auth
+
 export function HomeLayout() {
+
+  
   return (
     <>
         <Header />
 
-        <main className="container mx-auto pt-20 pb-12 lg:pb-0">
+        <main className={` pt-20  lg:pb-0 ${isAuth && 'container mx-auto pb-12'} `}>
             <Outlet />
         </main>
 
-        <NavBar />
-
+      {
+        isAuth && <NavBar />
+      }
     </>
   )
 }
