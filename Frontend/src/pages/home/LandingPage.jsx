@@ -1,14 +1,21 @@
-import { Hero } from "../../components/Home/LandingPage/Hero";
+import { SavesSection } from "../../components/Root/LandingPage/SavesSection";
+import { EndSection } from "../../components/Root/LandingPage/EndSection";
+import { HowItWork } from "../../components/Root/LandingPage/HowItWork";
+import { Hero } from "../../components/Root/LandingPage/Hero";
+
 
 export function LandingPage() {
   return (
-    <section className="w-full flex flex-col justify-center items-center pt-20">
+    <section className="w-full flex flex-col justify-center items-center pt-20 overflow-hidden">
        
        <Hero />
 
-        <section className="bg-yellow-300 h-screen w-full rounded-xl text-center pt-12">
-            section-how-it-works
-        </section>
+       <HowItWork />
+
+       <SavesSection />
+       
+       <EndSection />
+
     </section>
 
   )
