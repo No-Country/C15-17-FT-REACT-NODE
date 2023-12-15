@@ -14,7 +14,7 @@ export function AuthLayout () {
         <main className="h-screen flex">
             
             <section className="bg-grid-players flex-1 bg-contain relative hidden lg:block">
-                <div className="w-full h-full bg-black/70 flex flex-col items-center justify-center">
+                <div className="w-full h-full bg-black/60 flex flex-col items-center justify-center">
                     <h2 className="text-4xl font-semibold text-white">Bienvenido de vuelta</h2>
                     <p></p>
                 </div>
@@ -22,7 +22,7 @@ export function AuthLayout () {
                     <IconArrowLeft />
                 </LinkIcon>
             </section>
-            <section className="flex-1">
+            <section className="flex-1 ">
 
                 <Outlet />
             </section>
