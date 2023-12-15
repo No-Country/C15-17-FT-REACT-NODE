@@ -1,45 +1,84 @@
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { IconEye } from "../../components/icons/IconEye";
 import { IconEyeClose } from "../../components/icons/IconEyeClose";
 import { Button } from "../../components/ui/Button";
 import { Input } from "../../components/UI/Input";
 import { LinkButton } from "../../components/ui/LinkButton";
 import { useAuth } from "../../hooks/useAuth";
+import { registerValidate } from "../../utils/auth.validate";
 
 const Register = () => {
 
 
     const { signup } = useAuth()
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [repeatPassword, setRepeatPassword] = useState("");
+
+    const [data, setData] = useState({
+        username : '',
+        email : '',
+        password : '',
+        repeatPassword : ''
+    })
+
+    const [error, setError] = useState({
+        username : false,
+        email : false,
+        password : false,
+        repeatPassword : false
+    })
+
+
     const [showPassword, setShowPassword] = useState(false)
 
 
+
+    const handleFocus = () => {
+        setError({
+           email : false,
+           password : false
+        })
+
+    }
+
+
+    const handleChange = (e) => {
+        setData((prevValues) => ({
+            ...prevValues,
+            [e.target.name] : e.target.value
+        }))
+    }
 
 
     const onHandleRegister = async (e) => {
         e.preventDefault();
         
-        if(!username || !email || !password) {
-            alert('Deberia llenar los campos')
+        const { field, isError, messages } = registerValidate(data)
+
+        if(isError)  {
+            messages.forEach(message => {
+                toast.error(message)
+            })
+            setError(prevState => ({...prevState, ...field}))
             return
         }
 
-        if(password !== repeatPassword) {
-            alert('Las contraseñas deben ser identicas')
-            return
-        }
 
         const credentials = {
-            name: username,
-            email: email,
-            password: password,
+            name: data.username,
+            email: data.email,
+            password: data.password,
         };
 
-        await signup(credentials)
+        const response = await signup(credentials)
+
+        if (response.error) {
+            toast.error(response.error)
+            setError((prevValues) => ({
+                ...prevValues,
+                email : true
+            }))
+        }
         
        
     };
@@ -56,8 +95,10 @@ const Register = () => {
                     <span className='label_span font-semibold text-sm mb-1 text'>Usuario</span>
                     <Input 
                         type='text'
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
                         name='username'
+                        className={error.username ? ' border-red-400' : 'border-border-box'}
                         placeholder='@username'
                     />
                 </label>
@@ -66,8 +107,10 @@ const Register = () => {
                     <span className='label_span font-semibold text-sm mb-1 text'>Correo</span>
                     <Input 
                         type='email'
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChange}
+                        onFocus={handleFocus}
                         name='email'
+                        className={error.email ? ' border-red-400' : 'border-border-box'}
                         placeholder='user@gmail.com'
                     />
                 </label>
@@ -79,8 +122,9 @@ const Register = () => {
                             <Input
                                 name='password'
                                 type={showPassword ? 'text' : 'password'}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className='pr-12'
+                                onChange={handleChange}
+                                onFocus={handleFocus}
+                                className={`pr-12 ${error.password ? ' border-red-400' : 'border-border-box'}`}
                                 placeholder='**********'
                             />
                             <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute top-1/2 -translate-y-1/2 right-4">
@@ -94,10 +138,11 @@ const Register = () => {
                         <span className='label_span font-semibold text-sm mb-1'>Repetir contraseña</span>
                         <div className="relative">
                             <Input
-                                name='password'
+                                name='repeatPassword'
                                 type={showPassword ? 'text' : 'password'}
-                                onChange={(e) => setRepeatPassword(e.target.value)}
-                                className='pr-12'
+                                onChange={handleChange}
+                                onFocus={handleFocus}
+                                className={`pr-12 ${error.repeatPassword ? ' border-red-400' : 'border-border-box'}`}
                                 placeholder='**********'
                             />
                             <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute top-1/2 -translate-y-1/2 right-4">

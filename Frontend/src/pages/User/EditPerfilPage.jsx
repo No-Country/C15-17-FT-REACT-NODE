@@ -6,13 +6,12 @@ import { toast} from 'react-toastify'
 
 export function EditPerfilPage() {
 
-  const { isAuth } = useAuth()
+  const { isAuth, isLoading } = useAuth()
 
-  if(!isAuth) {
+  if(!isLoading && !isAuth) {
     toast.error('Para acceder debes autenticarte')
     return <Navigate to='/auth/login'/>
   }
-
   return (
       <section className="flex items-start gap-x-12   border-t border-border-box relative h-[calc(100vh-100px)] px-4 lg:px-0">
 

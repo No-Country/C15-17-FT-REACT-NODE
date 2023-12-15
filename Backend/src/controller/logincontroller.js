@@ -5,26 +5,24 @@ import { generateToken } from "../middlewares/auth.middleware.js";
 /* registro */
 
 export const signUp = async (req, res) => {
+    const { name, email, password } = req.body;
     try {
-        const { name, email, password } = req.body;
-        console.log(req.body)
 
-        if (!(await User.findOne({name: name}))) {
-            const passwordHash = await bcrypt.hash(password, 10)
+        const userFind = await User.findOne({email: email})
 
-            
+        if (userFind) return res.status(404).json({error: "El email ya existe"}) 
 
-            const newUser = new User ({
+        const passwordHash = await bcrypt.hash(password, 10)
+
+        const newUser = new User ({
                 name,
                 email,
                 password: passwordHash,
             });
             
-            await newUser.save();
-            const acess_token = generateToken(newUser)
-            return res.status(200).json({acess_token, newUser, creado: "true"});
-        }
-        return res.status(404).send({msg: "Email ya asociado"})
+        await newUser.save();
+        const acess_token = generateToken(newUser)
+        return res.status(200).json({acess_token, newUser, creado: "true"});
 
     } catch (error) {
         console.log(error)
@@ -43,18 +41,18 @@ export const signIn = async (req, res) => {
     try {
         const user = await User.findOne({ email });
         
-        if (!user) return res.status(404).send("Usuario no encontrado, revisa el correo o regístrate");
+        if (!user) return res.status(404).json({ error : "El email o la contraseña son incorrectas" })
 
         const matchPassword = await bcrypt.compare(password, user.password);
         
-        if(!matchPassword) return res.status(404).send("Las contraseñas no coinciden")
+        if(!matchPassword) return res.status(404).json({ error : "El email o la contraseña son incorrectas" })
 
         const acess_token = generateToken(user)
 
         return res.status(200).json({acess_token, user: user, logged: "true" });
         
     } catch (error) {
-        console.log(error);
-        return res.status(500).send("Error interno del servidor");
+        console.log(error);n
+        return res.status(500).json({ error : "Error interno del servidor"});
     }
 };
