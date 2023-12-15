@@ -5,7 +5,9 @@ import { usePins } from "../../hooks/usePins"
 
 export function HomePage () {
 
+
     const { data, isLoading, isError } = usePins()
+
 
 
     if(isLoading) return <p>Cargando...</p>

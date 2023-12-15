@@ -3,22 +3,14 @@ import { DropDown } from '../../shared/Dropdown'
 import { Search } from "../../shared/Search";
 import { Menu } from "@headlessui/react";
 import { Link } from "react-router-dom";
-
-const itemsConfig = [
-    {
-        id : 1,
-        label : 'Mi perfil',
-        href : '/perfil'
-    },
-    {
-        id : 2,
-        label : 'Salir',
-        href : '/auth/login'
-    }
-]
+import { useAuth } from "../../../hooks/useAuth";
 
 
 export function Nav() {
+
+
+  const { signout } = useAuth()
+
   return (
     <>
             <nav className="flex gap-x-6 items-center  w-full">
@@ -47,24 +39,34 @@ export function Nav() {
                     <img src='https://placehold.co/50x50' className='rounded-full'/>
                 </Link>
                 <DropDown icon={<IconChevronDown />} label='Opciones'>
-                        {
-                            itemsConfig.map(item => (
-                                <Menu.Item key={item.id}>
+                            <Menu.Item >
                                 {({ active }) => (
                                         <Link
-                                            to={item.href}
+                                            to='/perfil'
                                             className={`${
                                             active ? 'bg-gray-200 text-gray-900' : 'text-gray-900'
                                             } group flex w-full items-center px-2 py-2 font-semibold text-base rounded-md`}
                                         >
                                             
-                                            {item.label}
+                                            Mi perfil
                                         </Link>
                                     )}
                                 </Menu.Item>
-
-                            ))
-                        }
+                    
+                                <Menu.Item >
+                                {({ active }) => (
+                                        <button
+                                            onClick={signout}
+                                            className={`${
+                                            active ? 'bg-gray-200 text-gray-900' : 'text-gray-900'
+                                            } group flex w-full items-center px-2 py-2 font-semibold text-base rounded-md`}
+                                        >
+                                            
+                                            Salir
+                                        </button>
+                                    )}
+                                </Menu.Item>
+                    
                 </DropDown>
             </div>
     </>

@@ -12,14 +12,17 @@ export const signUp = async (req, res) => {
         if (!(await User.findOne({name: name}))) {
             const passwordHash = await bcrypt.hash(password, 10)
 
+            
+
             const newUser = new User ({
                 name,
                 email,
                 password: passwordHash,
             });
-
+            
             await newUser.save();
-            return res.status(200).json({newUser, creado: "true"});
+            const acess_token = generateToken(newUser)
+            return res.status(200).json({acess_token, newUser, creado: "true"});
         }
         return res.status(404).send({msg: "Email ya asociado"})
 
@@ -43,7 +46,9 @@ export const signIn = async (req, res) => {
         if (!user) return res.status(404).send("Usuario no encontrado, revisa el correo o regístrate");
 
         const matchPassword = await bcrypt.compare(password, user.password);
-            
+        
+        if(!matchPassword) return res.status(404).send("Las contraseñas no coinciden")
+
         const acess_token = generateToken(user)
 
         console.log(acess_token)
