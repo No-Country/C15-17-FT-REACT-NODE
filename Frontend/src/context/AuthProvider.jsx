@@ -9,7 +9,6 @@ import Cookies from "js-cookie";
 
 export const AuthContext = createContext({});
 
-const expires = new Date(new Date().getTime() + 10 * 60 * 1000);
 
 export function AuthProvider ({ children }) {
     const navigate = useNavigate()
@@ -55,11 +54,17 @@ export function AuthProvider ({ children }) {
         })();
     },[])
 
+      const expiresToken = () => { // expira despues de 6 dias
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 6);
+        return expirationDate;
+      };
+
         const singin = async (credentials) => {
             try {
                 const user = await api.singin({ credentials })
                 const token = user.acess_token
-    
+                const expires = expiresToken();
                 Cookies.set("token", token, {
                     expires,
                   });
@@ -85,6 +90,7 @@ export function AuthProvider ({ children }) {
             try {
                 const user = await api.signup({ credentials })
                 const token = user.acess_token
+                const expires = expiresToken();
                 Cookies.set("token", token, {
                     expires,
                   });
