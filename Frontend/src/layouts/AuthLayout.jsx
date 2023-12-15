@@ -29,8 +29,10 @@ export function AuthLayout () {
                     <IconArrowLeft />
                 </LinkIcon>
             </section>
-            <section className="flex-1 ">
-
+            <section className="flex-1 relative">
+                <LinkIcon href='/' className='absolute top-4 left-4 block lg:hidden bg-black'>
+                    <IconArrowLeft />
+                </LinkIcon>
                 <Outlet />
             </section>
 

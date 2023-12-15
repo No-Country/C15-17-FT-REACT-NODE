@@ -50,7 +50,7 @@ export function DetailPinForm({ handleDetailPinForm }) {
                 <Input
                     placeholder='Agrega una etiqueta'
                     type='text'
-                    name='hastagh'
+                    name='tags'
                     onChange={handleInputChange}
                 />
             </div>

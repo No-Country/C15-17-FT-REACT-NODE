@@ -7,6 +7,8 @@ import { useAuth } from "../hooks/useAuth";
 export function HomeLayout() {
 
   const { isAuth } = useAuth()
+
+  
   
   return (
     <>
