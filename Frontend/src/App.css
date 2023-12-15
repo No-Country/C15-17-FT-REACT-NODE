@@ -109,6 +109,13 @@ form {
   background-color: #333;
 }
 
+@media (min-width: 1024px) {
+  .content{
+    max-width: 100%
+  }
+}
+
+
 
 /* Hero Radial Gradient */
 .bg-radial-white {
