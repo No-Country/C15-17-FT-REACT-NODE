@@ -9,7 +9,7 @@ import { createPin } from "../../services/pins.services";
 
 export function CreatePinPage() {
 
-  const { isAuth, user } = useAuth()
+  const { isAuth, user, isLoading : isLoad } = useAuth()
 
   const [formData, setFormData] = useState({
       image: null,
@@ -22,7 +22,7 @@ export function CreatePinPage() {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  if(!isAuth) {
+  if(!isLoad && !isAuth) {
     toast.error('Para acceder debes autenticarte')
     return <Navigate to='/auth/login'/>
   }

@@ -5,31 +5,65 @@ import { Button } from "../../components/ui/Button";
 import { LinkButton } from "../../components/ui/LinkButton";
 import { IconEye } from "../../components/icons/IconEye";
 import { IconEyeClose } from "../../components/icons/IconEyeClose";
+import { loginValidate } from "../../utils/auth.validate";
+import { toast } from "react-toastify";
 
 const Login = () => {
 
 
     const { singin } = useAuth()
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [data, setData] = useState({
+        email : '',
+        password : ''
+    })
+
+    const [error, setError] = useState({
+        email: false,
+        password : false
+    })
 
     const [showPassword, setShowPassword] = useState(false)
+
+    const handleFocus = () => {
+        setError({
+           email : false,
+           password : false
+        })
+
+    }
+
+    const handleChange = (e) => {
+        setData((prevValues) => ({
+            ...prevValues,
+            [e.target.name] : e.target.value
+        }))
+    }
 
     const onHandleLogin = async (e) => {
         e.preventDefault();
 
-        if(!email || !password)  {
-            alert('deberia llenar los datos')
+        const { field, isError, messages } = loginValidate(data)
+
+        if(isError)  {
+            messages.forEach(message => {
+                toast.error(message)
+            })
+            setError(prevState => ({...prevState, ...field}))
             return
         }
 
-        const credentials = {
-            email,
-            password
-        }
-       await singin(credentials)
+       const response = await singin(data)
+
+       if (response.error) {
+         toast.error(response.error)
+         setError({
+            email : true,
+            password : true
+         })
+       }
 
     };
+
 
     return (
         <div className='content px-6 lg:px-12 bg-radial-blue '>
@@ -41,9 +75,11 @@ const Login = () => {
                         <span className='label_span font-semibold text-sm mb-1 text'>Correo</span>
                         <Input 
                             type='email'
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleChange}
+                            onFocus={handleFocus}
                             name='email'
                             placeholder='user@gmail.com'
+                            className={error.email ? ' border-red-400' : 'border-border-box'}
                         />
                     </label>
                     <label className='form_label mb-4'>
@@ -52,9 +88,10 @@ const Login = () => {
                             <Input
                                 name='password'
                                 type={showPassword ? 'text' : 'password'}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className='pr-12'
+                                onChange={handleChange}
+                                onFocus={handleFocus}
                                 placeholder='**********'
+                                className={`pr-12 ${error.password ? ' border-red-400' : 'border-border-box'}`}
                             />
                             <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute top-1/2 -translate-y-1/2 right-4">
                                 {   

@@ -5,6 +5,9 @@ import { PinList } from "../../components/shared/PinList"
 import { LinkIcon } from "../../components/ui/LinkIcon"
 import { Button } from "../../components/ui/Button"
 import { usePins } from "../../hooks/usePins"
+import { useAuth } from "../../hooks/useAuth"
+import { toast } from "react-toastify"
+import { Navigate } from "react-router-dom"
 
 const pin =  {
     "id": 2,
@@ -24,7 +27,14 @@ const pin =  {
 
 export function DetailPagePin () {
 
-    const {data, isLoading} = usePins()
+  const { isAuth, isLoading : isLoad } = useAuth()
+  const {data, isLoading} = usePins()
+
+  if(!isLoad && !isAuth) {
+    toast.error('Para acceder debes autenticarte')
+    return <Navigate to='/auth/login'/>
+  }
+
 
     if(isLoading) return <div>Loading...</div>
 

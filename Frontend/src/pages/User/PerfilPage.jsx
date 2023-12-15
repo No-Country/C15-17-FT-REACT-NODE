@@ -9,12 +9,13 @@ import { toast} from 'react-toastify'
 
 export function PerfilPage () {
 
-    const { isAuth, user } = useAuth()
 
-    if(!isAuth) {
-        toast.error('Para acceder debes autenticarte')
-        return <Navigate to='/auth/login'/>
-    }
+const { isAuth, isLoading, user } = useAuth()
+
+  if(!isLoading && !isAuth) {
+    toast.error('Para acceder debes autenticarte')
+    return <Navigate to='/auth/login'/>
+  }
     
     
     return (

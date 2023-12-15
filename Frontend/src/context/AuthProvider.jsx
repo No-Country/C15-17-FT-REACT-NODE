@@ -13,7 +13,7 @@ export const AuthContext = createContext({});
 
 export function AuthProvider ({ children }) {
     const navigate = useNavigate()
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [data, setData] = useState({
         user : {},
         isAuth : false,
@@ -63,23 +63,28 @@ export function AuthProvider ({ children }) {
 
         const singin = async (credentials) => {
             try {
-                const user = await api.singin({ credentials })
-                const token = user.acess_token
+                const response = await api.singin({ credentials })
+                if( response.error ) {
+                  return response
+                }
+
+                const token = response.acess_token
                 const expires = expiresToken();
                 Cookies.set("token", token, {
                     expires,
                   });
     
                 setData({
-                    user : user.user,
+                    user : response.user,
                     isAuth : true
                 });
 
                 navigate('/')
-                toast.success(`Bienvenido de vuelta ${data.user.name}`)
+                toast.success(`Bienvenido de vuelta ${response.user.name}`)
     
             } catch (error) {
                 console.log(error)
+               
                 setData({
                     user : {},
                     isAuth : false
@@ -91,15 +96,18 @@ export function AuthProvider ({ children }) {
 
         const signup =  async (credentials) => {
             try {
-                const user = await api.signup({ credentials })
-                
-                const token = user.acess_token
+                const response = await api.signup({ credentials })
+
+                if( response.error ) {
+                  return response
+                }
+                const token = response.acess_token
                 const expires = expiresToken();
                 Cookies.set("token", token, {
                     expires,
                   });
                 setData({
-                    user : user.newUser,
+                    user : response.newUser,
                     isAuth : true
                 });
 
