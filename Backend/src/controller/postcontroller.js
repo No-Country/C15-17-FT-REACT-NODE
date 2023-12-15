@@ -21,23 +21,24 @@ export const allPublications = async (req, res) => {
 
 export const newPublication = async (req, res) => {
     try {
-        const { title, ubication, description, url, likes, photographer } = req.body;
+        const { image, title, description, team, tags,  } = req.body;
 
-        //const userPhoto = await users.findById(photographer);
+        // const userPhoto = await users.findById(photographer);
 
         const photo = await publications({
+            image,
             title,
-            ubication,
             description,
-            url,
-            likes,
-            photographer: photographer || null, //userPhoto._id
+            team,
+            tags,
+            // photographer: photographer || null, //userPhoto._id
+            time: new Date(),
         });
 
         await photo.save();
-
-        /* userPhoto.publications = userPhoto.publications.concat(photo._id);
-        await userPhoto.save(); */
+        console.log(photo);
+        //userPhoto.publications = userPhoto.publications.concat(photo._id);
+        //await userPhoto.save();
         return res.status(201).send({ message: "Publicacion creada correctamente" });
 
 

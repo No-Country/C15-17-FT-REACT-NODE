@@ -6,6 +6,7 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [isLogged, setIsLogged] = useState(false);
 
     const {isAuth, setIsAuth } = usePins()
 
@@ -14,6 +15,7 @@ const Login = () => {
     const URL = "http://localhost:8080/api/auth/login";
 
     const onHandleLogin = async (e) => {
+        setIsLogged(true);
         e.preventDefault();
         setIsLoading(true);
 
@@ -31,11 +33,11 @@ const Login = () => {
                 body: JSON.stringify(userData),
             });
 
-            console.log(userData); // <-- Objeto vacio
+            console.log(userData);
             const responseData = await response.json();
             console.log(responseData);
 
-            if (responseData) {
+            if (!responseData) {
                 setUsername("");
                 setPassword("");
                 setIsLoading(false);
@@ -46,7 +48,7 @@ const Login = () => {
             if (isLoading) navigation("/");
         } catch (error) {
             console.error(error);
-            Alert.alert("Error", "Ocurrió un error al iniciar sesión.");
+            //Alert.alert("Error", "Ocurrió un error al iniciar sesión.");
         }
     };
 

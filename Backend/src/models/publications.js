@@ -1,32 +1,47 @@
 import mongoose from "mongoose";
 
-const publicationSchema = mongoose.Schema(
-    {
-        title: {
-            type: String,
-        },
-        description: {
-            type: String,
-        },
-        url: {
-            type: String, 
-        },
-        likes: [
-            {
-              type: mongoose.Types.ObjectId,
-              ref: "users",
-            },
-        ],
-        downloads: {
-            type: Number,
-        },
-        photographer: {
-            type: mongoose.Types.ObjectId,
-            ref: "user"
-        }
-    }
-);
+const publicationSchema = mongoose.Schema({
+    image: {
+        type: String, // Puedes cambiar el tipo según tus necesidades (String, Buffer, etc.)
+        required: true,
+    },
+    title: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    team: {
+        type: String,
+        required: true,
+    },
+    tags: {
+        type: [String], // Puedes ajustar según cómo quieras manejar las etiquetas
+        required: true,
+    },
+    photographer: {
+        type: mongoose.Schema.Types.ObjectId, // Referencia al ID de un usuario (asumiendo que el usuario es almacenado en otra colección)
+        ref: "User", // Nombre del modelo de usuario en caso de que esté almacenado en otra colección
+        default: null,
+    },
+    time: {
+        type: Date,
+        default: Date.now,
+    },
+});
 
-const publications = mongoose.model("Publication", publicationSchema );
+/* 
+image,
+title,
+description,
+team,
+tags,
+photographer: photographer || null, //userPhoto._id
+time: new Date(),
+ */
+
+const publications = mongoose.model("Publication", publicationSchema);
 
 export default publications;

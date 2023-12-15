@@ -1,11 +1,12 @@
-import express from 'express';
-import { newPublication } from '../controller/postcontroller.js';
+import express from "express";
+import {
+    newPublication,
+    allPublications,
+} from "../controller/postcontroller.js";
 
 const router = express.Router();
 
-
-router.post('/', newPublication);
-
-
+router.get("/traer", allPublications);
+router.post("/crear", newPublication);
 
 export default router;
