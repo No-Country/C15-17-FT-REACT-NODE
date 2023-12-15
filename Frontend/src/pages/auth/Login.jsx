@@ -1,5 +1,10 @@
 import { useAuth } from "../../hooks/useAuth";
 import { useState } from "react";
+import { Input } from "../../components/UI/Input";
+import { Button } from "../../components/ui/Button";
+import { LinkButton } from "../../components/ui/LinkButton";
+import { IconEye } from "../../components/icons/IconEye";
+import { IconEyeClose } from "../../components/icons/IconEyeClose";
 
 const Login = () => {
 
@@ -7,44 +12,12 @@ const Login = () => {
     const { singin } = useAuth()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const [isLogged, setIsLogged] = useState(false);
 
+    const [showPassword, setShowPassword] = useState(false)
 
     const onHandleLogin = async (e) => {
-        setIsLogged(true);
         e.preventDefault();
 
-        try {
-            const userData = {
-                name: username,
-                password: password
-            };
-
-            const response = await fetch(URL, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(userData),
-            });
-
-            console.log(userData);
-            const responseData = await response.json();
-            console.log(responseData);
-
-            if (!responseData) {
-                setUsername("");
-                setPassword("");
-                setIsLoading(false);
-                // retornar error al usuario
-                return;
-            }
-
-            if (isLoading) navigation("/");
-        } catch (error) {
-            console.error(error);
-            //Alert.alert("Error", "Ocurrió un error al iniciar sesión.");
         if(!username || !password)  {
             alert('deberia llenar los datos')
             return
@@ -57,44 +30,52 @@ const Login = () => {
        await singin(credentials)
 
     };
-}
 
     return (
-        <div className='content'>
-            <h1>inicia sesión</h1>
-            <form onSubmit={onHandleLogin}>
+        <div className='content px-12 bg-radial-blue '>
+            <h2 className="font-semibold text-4xl mb-2">PictureFlow</h2>
+            <p className=" text-gray-800 font-semibold">Inicia sesion en tu cuenta de PictureFlow</p>
+            <form onSubmit={onHandleLogin} className='py-6 bg-radial-yellow'>
                 <div className='content_label'>
-                    <label className='form_label'>
-                        <span className='label_span'>Usuario</span>
-                        <input
-                            name='usuario'
+                    <label className='form_label mb-4 '>
+                        <span className='label_span font-semibold text-sm mb-1 text'>Usuario</span>
+                        <Input 
                             type='text'
-                            className='input_form'
                             onChange={(e) => setUsername(e.target.value)}
+                            name='username'
+                            placeholder='@username'
                         />
                     </label>
-                    <label className='form_label'>
-                        <span className='label_span'>Contraseña</span>
-                        <input
-                            name='password'
-                            type='password'
-                            className='input_form'
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                    <label className='form_label mb-4'>
+                        <span className='label_span font-semibold text-sm mb-1'>Contraseña</span>
+                        <div className="relative">
+                            <Input
+                                name='password'
+                                type={showPassword ? 'text' : 'password'}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className='pr-12'
+                                placeholder='**********'
+                            />
+                            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute top-1/2 -translate-y-1/2 right-4">
+                                {   
+                                    showPassword ? <IconEyeClose /> : <IconEye />
+                                }
+                            </button>
+                        </div>
                     </label>
                 </div>
                 <div className='content_btn'>
-                    <button type='submit' className='btn login'>
-                        Entrar
-                    </button>
-                    <div className='content_divisor'>
+                    <Button type='submit' color='blue' className='w-full'>
+                        Iniciar sesión
+                    </Button>
+                    <div className='content_divisor gap-x-4 w-full justify-center py-2'>
                         <div className='divisor'></div>
-                        <span className='text'>Ó</span>
+                        <span className='font-semibold text-xl'>Ó</span>
                         <div className='divisor'></div>
                     </div>
-                    <button type='submit' className='btn register'>
+                    <LinkButton href='/auth/register' color="yellow" className='w-full text-center'>
                         Registrarse
-                    </button>
+                    </LinkButton>
                 </div>
             </form>
         </div>

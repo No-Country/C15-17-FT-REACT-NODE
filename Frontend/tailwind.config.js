@@ -10,10 +10,12 @@ export default {
         'border-box' : '#CDCDCD',
         primary : '#3498db',
         'sky-light' : '#DAFFF6',
+        secondary : '#e3c200',
         'green-dark' : '#006B6C'
       },
       backgroundImage : {
-        'grid-players' : 'url(/images/grid.webp)'
+        'grid-players' : 'url(/images/grid.webp)',
+       
       }
     },
   },

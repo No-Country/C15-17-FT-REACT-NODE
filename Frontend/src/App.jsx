@@ -28,10 +28,10 @@ function App() {
             <Route path='/' element={<HomeLayout />}>
 
               <Route index element={ isAuth ? <HomePage /> : <LandingPage />}/>
-              <Route path='pin-create' element={<CreatePinPage />}/>
-              <Route path='settings-perfil' element={<EditPerfilPage />}/>
-              <Route path='perfil' element={<PerfilPage />}/>
-              <Route path='pin/:id' element={<DetailPagePin />}/>
+                <Route path='pin-create' element={<CreatePinPage />}/>
+                <Route path='settings-perfil' element={<EditPerfilPage />}/>
+                <Route path='perfil' element={<PerfilPage />}/>
+                <Route path='pin/:id' element={<DetailPagePin />}/>
 
             </Route>
 
