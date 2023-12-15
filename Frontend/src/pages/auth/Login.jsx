@@ -7,11 +7,44 @@ const Login = () => {
     const { singin } = useAuth()
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [isLogged, setIsLogged] = useState(false);
 
 
     const onHandleLogin = async (e) => {
+        setIsLogged(true);
         e.preventDefault();
 
+        try {
+            const userData = {
+                name: username,
+                password: password
+            };
+
+            const response = await fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userData),
+            });
+
+            console.log(userData);
+            const responseData = await response.json();
+            console.log(responseData);
+
+            if (!responseData) {
+                setUsername("");
+                setPassword("");
+                setIsLoading(false);
+                // retornar error al usuario
+                return;
+            }
+
+            if (isLoading) navigation("/");
+        } catch (error) {
+            console.error(error);
+            //Alert.alert("Error", "Ocurrió un error al iniciar sesión.");
         if(!username || !password)  {
             alert('deberia llenar los datos')
             return
@@ -24,6 +57,7 @@ const Login = () => {
        await singin(credentials)
 
     };
+}
 
     return (
         <div className='content'>

@@ -17,6 +17,7 @@ const app = express()
 app.use(express.json());
 app.use(cors(corsOptions));
 
+
 /* if (isProduction) {
   app.use(express.static(CLIENT_PATH))
 } */

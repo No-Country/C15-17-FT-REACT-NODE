@@ -41,7 +41,7 @@ export const signIn = async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ email: name });
+        const user = await User.findOne({ name: name });
         
         if (!user) return res.status(404).send("Usuario no encontrado, revisa el correo o regístrate");
 
