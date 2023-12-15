@@ -1,8 +1,18 @@
 import { EditPerfilForm } from "../../components/User/EditPerfil/EditPerfilForm";
 import { IconArrow } from "../../components/Icons/IconArrow";
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
+import { useAuth } from "../../hooks/useAuth";
+import { toast} from 'react-toastify'
 
 export function EditPerfilPage() {
+
+  const { isAuth } = useAuth()
+
+  if(!isAuth) {
+    toast.error('Para acceder debes autenticarte')
+    return <Navigate to='/auth/login'/>
+  }
+
   return (
       <section className="flex items-start gap-x-12   border-t border-border-box relative h-[calc(100vh-100px)] px-4 lg:px-0">
 

@@ -1,16 +1,27 @@
-import { useState } from "react";
 import { DetailPinForm } from "../../components/User/CreatePin/DetailsPinForm";
 import { UploadPinForm } from "../../components/User/CreatePin/UploadPinForm";
 import { Button } from "../../components/ui/Button";
+import { useAuth } from "../../hooks/useAuth";
+import { Navigate } from "react-router-dom";
+import { toast} from 'react-toastify'
+import { useState } from "react";
 
 export function CreatePinPage() {
-    const [formData, setFormData] = useState({
-        image: "",
-        title: "",
-        description: "",
-        team: "",
-        tags: "",
-    });
+
+  const { isAuth } = useAuth()
+  const [formData, setFormData] = useState({
+      image: null,
+      title: "",
+      description: "",
+      team: "",
+      tags: "",
+  });
+
+  if(!isAuth) {
+    toast.error('Para acceder debes autenticarte')
+    return <Navigate to='/auth/login'/>
+  }
+
 
     const handleUploadPinForm = (image) => {
         setFormData((prevData) => ({ ...prevData, image }));

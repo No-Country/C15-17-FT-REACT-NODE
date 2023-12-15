@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { createContext } from "react";
 import { jwtDecode } from 'jwt-decode'
+import { toast } from 'react-toastify'
 
 import Cookies from "js-cookie";
 
@@ -70,11 +71,12 @@ export function AuthProvider ({ children }) {
                   });
     
                 setData({
-                    user : user,
+                    user : user.user,
                     isAuth : true
                 });
 
                 navigate('/')
+                toast.success(`Bienvenido de vuelta ${data.user.name}`)
     
             } catch (error) {
                 console.log(error)
@@ -82,6 +84,7 @@ export function AuthProvider ({ children }) {
                     user : {},
                     isAuth : false
                 });
+                toast.error('Ocurrio un erro en los servidores de PictureFlow')
     
             }
         }
@@ -89,24 +92,27 @@ export function AuthProvider ({ children }) {
         const signup =  async (credentials) => {
             try {
                 const user = await api.signup({ credentials })
+                
                 const token = user.acess_token
                 const expires = expiresToken();
                 Cookies.set("token", token, {
                     expires,
                   });
                 setData({
-                    user : user,
+                    user : user.newUser,
                     isAuth : true
                 });
 
                 navigate('/')
+                toast.success('Bienvenido a PictureFlow, descubre la grandeza del futbol argentino!')
+
             } catch (error) {
                 console.log(error)
                 setData({
                     user : {},
                     isAuth : false
                 });
-    
+                toast.error('Ocurrio un erro en los servidores de PictureFlow')
             }
         }
 
@@ -116,6 +122,8 @@ export function AuthProvider ({ children }) {
                 user : {},
                 isAuth : false
             });
+            navigate('/')
+            toast.success('Nos vemos! PictureFlow te espera.' )
         }
 
         return (
