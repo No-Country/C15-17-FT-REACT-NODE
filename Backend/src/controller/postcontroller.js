@@ -1,4 +1,6 @@
+import { uploadImage } from "../libs/cloudinary.js";
 import  publications  from "../models/publications.js";
+import fs from "fs-extra";
 
 
 export const allPublications = async (req, res) => {
@@ -21,19 +23,28 @@ export const allPublications = async (req, res) => {
 
 export const newPublication = async (req, res) => {
     try {
-        const { image, title, description, team, tags,  } = req.body;
+    
+        const { title, description, team, tags, photographer } = req.body;
+        let image = null
+
+        if(req.files?.image) {
+            const result = await uploadImage(req.files.image.tempFilePath);
+            await fs.remove(req.files.image.tempFilePath);
+            image = result.secure_url
+        }
 
         // const userPhoto = await users.findById(photographer);
-
-        const photo = await publications({
-            image,
+        const newPin = {
             title,
             description,
             team,
             tags,
-            // photographer: photographer || null, //userPhoto._id
+            image,
             time: new Date(),
-        });
+            photographer
+        }
+
+        const photo = await publications(newPin);
 
         await photo.save();
         console.log(photo);
