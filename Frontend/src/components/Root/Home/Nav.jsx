@@ -9,7 +9,7 @@ import { useAuth } from "../../../hooks/useAuth";
 export function Nav() {
 
 
-  const { signout } = useAuth()
+  const { signout, user } = useAuth()
 
   return (
     <>
@@ -35,8 +35,8 @@ export function Nav() {
                 <Search />
             </nav>
             <div className="hidden lg:flex items-center gap-x-2">
-                <Link to='/perfil'>
-                    <img src='https://placehold.co/50x50' className='rounded-full'/>
+                <Link to='/perfil' className="w-8 h-8">
+                    <img src={user?.avatar ? user.avatar : '/images/placeholder.webp'} className='rounded-full w-8 h-8 object-cover'/>
                 </Link>
                 <DropDown icon={<IconChevronDown />} label='Opciones'>
                             <Menu.Item >
