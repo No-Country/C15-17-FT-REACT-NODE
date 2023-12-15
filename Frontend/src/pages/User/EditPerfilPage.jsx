@@ -12,6 +12,8 @@ export function EditPerfilPage() {
     toast.error('Para acceder debes autenticarte')
     return <Navigate to='/auth/login'/>
   }
+
+  
   return (
       <section className="flex items-start gap-x-12   border-t border-border-box relative h-[calc(100vh-100px)] px-4 lg:px-0">
 

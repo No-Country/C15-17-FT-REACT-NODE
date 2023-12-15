@@ -5,7 +5,7 @@ import { generateToken } from "../middlewares/auth.middleware.js";
 /* registro */
 
 export const signUp = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { username, email, password } = req.body;
     try {
 
         const userFind = await User.findOne({email: email})
@@ -15,7 +15,7 @@ export const signUp = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, 10)
 
         const newUser = new User ({
-                name,
+                username,
                 email,
                 password: passwordHash,
             });

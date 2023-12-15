@@ -65,14 +65,14 @@ const Register = () => {
 
 
         const credentials = {
-            name: data.username,
+            username: data.username,
             email: data.email,
             password: data.password,
         };
 
         const response = await signup(credentials)
 
-        if (response.error) {
+        if (response?.error) {
             toast.error(response.error)
             setError((prevValues) => ({
                 ...prevValues,

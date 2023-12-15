@@ -13,7 +13,6 @@ export async function createPin ({ newPin }) {
         form.append(key, newPin[key])
     }
 
-    console.log(newPin)
 
     const config = {
         method: "POST",
