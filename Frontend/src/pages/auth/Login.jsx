@@ -10,7 +10,7 @@ const Login = () => {
 
 
     const { singin } = useAuth()
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const [showPassword, setShowPassword] = useState(false)
@@ -18,32 +18,32 @@ const Login = () => {
     const onHandleLogin = async (e) => {
         e.preventDefault();
 
-        if(!username || !password)  {
+        if(!email || !password)  {
             alert('deberia llenar los datos')
             return
         }
 
         const credentials = {
-            name: username,
-            password: password
+            email,
+            password
         }
        await singin(credentials)
 
     };
 
     return (
-        <div className='content px-12 bg-radial-blue '>
+        <div className='content px-6 lg:px-12 bg-radial-blue '>
             <h2 className="font-semibold text-4xl mb-2">PictureFlow</h2>
             <p className=" text-gray-800 font-semibold">Inicia sesion en tu cuenta de PictureFlow</p>
             <form onSubmit={onHandleLogin} className='py-6 bg-radial-yellow'>
                 <div className='content_label'>
                     <label className='form_label mb-4 '>
-                        <span className='label_span font-semibold text-sm mb-1 text'>Usuario</span>
+                        <span className='label_span font-semibold text-sm mb-1 text'>Correo</span>
                         <Input 
-                            type='text'
-                            onChange={(e) => setUsername(e.target.value)}
-                            name='username'
-                            placeholder='@username'
+                            type='email'
+                            onChange={(e) => setEmail(e.target.value)}
+                            name='email'
+                            placeholder='user@gmail.com'
                         />
                     </label>
                     <label className='form_label mb-4'>

@@ -33,15 +33,15 @@ export const signUp = async (req, res) => {
 
 /* login */
 export const signIn = async (req, res) => {
-    const { name, password } = req.body;
-    if (!name) {
+    const { email, password } = req.body;
+    if (!email) {
         return res.status(400).send({ error: "user vacío" });
     } else if (!password) {
         return res.status(400).send({ error: "Contraseña vacía" });
     }
 
     try {
-        const user = await User.findOne({ name: name });
+        const user = await User.findOne({ email });
         
         if (!user) return res.status(404).send("Usuario no encontrado, revisa el correo o regístrate");
 
@@ -51,8 +51,7 @@ export const signIn = async (req, res) => {
 
         const acess_token = generateToken(user)
 
-        console.log(acess_token)
-        return res.status(200).json({acess_token, user: user.name, logged: "true" });
+        return res.status(200).json({acess_token, user: user, logged: "true" });
         
     } catch (error) {
         console.log(error);

@@ -47,7 +47,7 @@ const Register = () => {
     // Dar estilos a inputs cuando isError sea true
 
     return (
-        <div className='content px-12 bg-radial-blue '>
+        <div className='content px-6 lg:px-12 bg-radial-blue '>
         <h2 className="font-semibold text-4xl mb-2">PictureFlow</h2>
         <p className=" text-gray-800 font-semibold">Inicia sesion en tu cuenta de PictureFlow</p>
         <form onSubmit={onHandleRegister} className='py-6 bg-radial-yellow'>
@@ -63,7 +63,7 @@ const Register = () => {
                 </label>
 
                 <label className='form_label mb-4 '>
-                    <span className='label_span font-semibold text-sm mb-1 text'>Usuario</span>
+                    <span className='label_span font-semibold text-sm mb-1 text'>Correo</span>
                     <Input 
                         type='email'
                         onChange={(e) => setEmail(e.target.value)}
