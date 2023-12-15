@@ -18,7 +18,7 @@ const buttonColors = {
     }
 }
 
-export function Button ({ children, type, className, color }) {
+export function Button ({ children, type, className, color, isLoading }) {
 
     const typeFormat = !type ? buttonTypes.BUTTON : (type !== 'button' && type !== 'submit') ? buttonTypes.BUTTON : buttonTypes[type];
 
@@ -28,7 +28,7 @@ export function Button ({ children, type, className, color }) {
 
 
     return (
-        <button type={typeFormat} className={`px-4 py-2 rounded-3xl ${colorFormat.color} ${colorFormat.hover} ${className} font-medium transition-all`}>
+        <button disabled={isLoading} type={typeFormat} className={`px-4 py-2 rounded-3xl ${colorFormat.color} ${colorFormat.hover} ${className} font-medium transition-all ${isLoading && 'bg-gray-200 opacity-60'}`}>
             { children }
         </button>
     )

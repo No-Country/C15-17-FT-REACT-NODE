@@ -7,14 +7,8 @@ export function UploadPinForm ({handleUploadPinForm}) {
 
     function handleInput(e) {
         setFile(e.target.files[0])
-
-        const reader = new FileReader();
-        reader.onload = function () {
-          const base64Image = reader.result;
-          // Llama a la función proporcionada desde CreatePinPage para actualizar el estado allí
-          handleUploadPinForm(base64Image);
-        };
-        reader.readAsDataURL(file);
+        handleUploadPinForm(e.target.files[0])
+        
       }
 
     

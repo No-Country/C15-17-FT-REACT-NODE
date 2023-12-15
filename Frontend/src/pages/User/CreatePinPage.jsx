@@ -5,17 +5,22 @@ import { useAuth } from "../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import { toast} from 'react-toastify'
 import { useState } from "react";
+import { createPin } from "../../services/pins.services";
 
 export function CreatePinPage() {
 
-  const { isAuth } = useAuth()
+  const { isAuth, user } = useAuth()
+
   const [formData, setFormData] = useState({
       image: null,
       title: "",
       description: "",
       team: "",
       tags: "",
+      photographer : user?._id
   });
+
+  const [isLoading, setIsLoading] = useState(false)
 
   if(!isAuth) {
     toast.error('Para acceder debes autenticarte')
@@ -33,26 +38,18 @@ export function CreatePinPage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+        setIsLoading(true)
         try {
-          // Realiza la petición POST a la URL "/api/publication/"
-          const response = await fetch("http://localhost:8080/api/publication/crear", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-          });
-          console.log(formData)
-          if (response.ok) {
-            // Maneja la respuesta exitosa aquí, si es necesario
-            console.log("Publicación creada exitosamente");
-          } else {
-            // Maneja el caso en el que la respuesta no sea exitosa
-            console.error("Error al crear la publicación");
-          }
+          const result = await createPin({ newPin : formData })
+          toast.success('Su pin fue creado sastifactoriamente')
+          //TODO : controlar los errores del formulario
+          console.log(result)
         } catch (error) {
           console.error("Error en la petición:", error);
+          toast.error('Hubo un error ala hora de su pin')
+
+        } finally {
+          setIsLoading(false)
         }
       };
 
@@ -63,7 +60,7 @@ export function CreatePinPage() {
         >
             <div className='border-b border-t border-border-box py-6 flex items-center justify-between w-full'>
                 <h2 className='font-semibold text-xl px-6'>Crear Pin</h2>
-                <Button type='submit' color='blue'>
+                <Button isLoading={isLoading} type='submit' color='blue'>
                     Publicar
                 </Button>
             </div>

@@ -1,6 +1,7 @@
+import fileUpload from 'express-fileupload';
+import router from './src/router/index.js';
 import express from 'express';
 import cors from 'cors';
-import router from './src/router/index.js';
 import "./options.js"
 import dotenv from 'dotenv';
 dotenv.config();
@@ -16,6 +17,11 @@ const app = express()
 
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: false }));
+app.use(fileUpload({
+  useTempFiles : true,
+  tempFileDir : './upload'
+}))
 
 
 /* if (isProduction) {

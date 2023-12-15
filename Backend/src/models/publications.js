@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const publicationSchema = mongoose.Schema({
     image: {
         type: String, // Puedes cambiar el tipo según tus necesidades (String, Buffer, etc.)
-        required: true,
     },
     title: {
         type: String,
