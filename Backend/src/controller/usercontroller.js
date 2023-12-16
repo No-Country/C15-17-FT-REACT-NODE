@@ -5,10 +5,8 @@ import fs from "fs-extra";
 
 export const getUsers = async (req, res) => {
     try {
-        // Obtén todos los usuarios de la base de datos
         const users = await User.find();
 
-        // Devuelve la lista de usuarios en la respuesta
         return res.status(200).json(users);
     } catch (error) {
         console.error(error);

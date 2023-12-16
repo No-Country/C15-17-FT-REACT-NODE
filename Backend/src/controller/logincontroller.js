@@ -52,7 +52,7 @@ export const signIn = async (req, res) => {
         return res.status(200).json({acess_token, user: user, logged: "true" });
         
     } catch (error) {
-        console.log(error);n
+        console.log(error);
         return res.status(500).json({ error : "Error interno del servidor"});
     }
 };
