@@ -1,7 +1,7 @@
 import { Input } from "../../UI/Input";
 import { Select } from "./Select";
 
-export function DetailPinForm({ handleDetailPinForm }) {
+export function DetailPinForm({ handleDetailPinForm, isError, onFocus }) {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         // Llama a la función proporcionada desde CreatePinPage para actualizar el estado allí
@@ -21,10 +21,12 @@ export function DetailPinForm({ handleDetailPinForm }) {
                     Título
                 </label>
                 <Input
+                    onFocus={onFocus}
                     placeholder='Agrega un titulo'
                     type='text'
                     name='title'
                     onChange={handleInputChange}
+                    className={isError.title ? ' border-red-400' : 'border-border-box'}
                 />
             </div>
             <div className='flex flex-col gap-y-2'>
@@ -34,7 +36,8 @@ export function DetailPinForm({ handleDetailPinForm }) {
                 <textarea
                     placeholder='Agrega una descripción detallada'
                     type='text'
-                    className='border-border-box border-2 rounded-3xl px-4 py-2 focus:outline-primary w-full resize-none h-24'
+                    onFocus={onFocus}
+                    className={`${isError.description ? 'border-red-400' : 'border-border-box'}  border-2 rounded-3xl px-4 py-2 focus:outline-primary w-full resize-none h-24`}
                     name='description'
                     onChange={handleInputChange}
                 />
@@ -52,8 +55,10 @@ export function DetailPinForm({ handleDetailPinForm }) {
                 <Input
                     placeholder='Agrega una etiqueta'
                     type='text'
+                    onFocus={onFocus}
                     name='tags'
                     onChange={handleInputChange}
+                    className={isError.tags ? 'border-red-400' : 'border-border-box'}
                 />
             </div>
         </section>

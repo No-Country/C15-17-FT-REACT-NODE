@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { uploadImage } from "../libs/cloudinary.js";
 import  publications  from "../models/publications.js";
 import fs from "fs-extra";
@@ -7,6 +8,7 @@ export const allPublications = async (req, res) => {
     try {
         const photo = await publications.find().populate("photographer", {
             _id: 1,
+            username: 1,
             name: 1,
             lastName: 1,
             avatar: 1
@@ -21,6 +23,59 @@ export const allPublications = async (req, res) => {
     }
 };
 
+export const deletePublication = async (req, res) => {
+    const { id } = req.params
+    try {
+        if (!mongoose.Types.ObjectId.isValid(team)) {
+            return res.status(400).json({error : "ID de la publicacion no válido"});
+        }
+          const deletedPublication = await publications.findOneAndDelete({ _id: id });
+
+          // Verificar si la publicación existe
+          if (!deletedPublication) {
+              return res.status(404).json({ error: "Publicación no encontrada" });
+          }
+          
+          if(deletedPublication?.image?.public_id) {
+            await deleteImage(deletedPublication.image.public_id)
+          }
+          
+  
+          return res.status(200).json({ message: "Publicación eliminada exitosamente", deletedPublication });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({ error })
+    }
+}
+
+export const getPublicationsByTeam = async (req, res) => {
+    const { team } = req.params
+    try {
+
+        if (!mongoose.Types.ObjectId.isValid(team)) {
+            return res.status(400).json({error : "ID de la publicacion no válido"});
+        }
+
+        const publicationsByTeam = await publications.find({ 'team': team })
+        .populate("photographer", {
+            _id: 1,
+            name: 1,
+            lastName: 1,
+            avatar: 1
+        });
+
+        if (publicationsByTeam.length === 0) {
+            return res.status(404).json({ error: "No hay publicaciones para este equipo" });
+        }
+
+        return res.status(200).json(publicationsByTeam);
+
+    } catch (error) {
+        return res.status(500).send({ error })
+    }
+
+}
+
 export const newPublication = async (req, res) => {
     try {
     
@@ -30,7 +85,10 @@ export const newPublication = async (req, res) => {
         if(req.files?.image) {
             const result = await uploadImage(req.files.image.tempFilePath);
             await fs.remove(req.files.image.tempFilePath);
-            image = result.secure_url
+            image = {
+                url : result.secure_url,
+                public_id : result.public_id
+            }
         }
 
         // const userPhoto = await users.findById(photographer);
@@ -60,15 +118,3 @@ export const newPublication = async (req, res) => {
 };
 
 
-export const deletePublication = async (req, res) => {
-    try {
-        if (await publications.findOne({_id: req.params.id })) {
-            await publications.deleteOne({ _id: req.params.id });
-
-            return res.status(201).json({ message: "Publicacion eliminada correctamente"})
-        }
-        return res.status(404).json({message: "La publicacion que desea eliminar no existe"});
-    } catch (error) {
-        res.status(404).json({message: error});
-    }
-};
