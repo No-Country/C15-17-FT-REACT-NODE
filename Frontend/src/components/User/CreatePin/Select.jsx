@@ -11,7 +11,6 @@ export function Select({ onChange }) {
     const { data, isLoading } = useTeams();
 
     const [selected, setSelected] = useState([]);
-    console.log(selected)
 
     const [query, setQuery] = useState('');
 

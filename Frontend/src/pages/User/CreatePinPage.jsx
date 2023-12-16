@@ -1,5 +1,6 @@
 import { DetailPinForm } from "../../components/User/CreatePin/DetailsPinForm";
 import { UploadPinForm } from "../../components/User/CreatePin/UploadPinForm";
+import { createPinValidate } from "../../utils/create-pin.validate";
 import { createPin } from "../../services/pins.services";
 import { Button } from "../../components/ui/Button";
 import { useAuth } from "../../hooks/useAuth";
@@ -20,7 +21,14 @@ export function CreatePinPage() {
       tags: "",
   });
 
- 
+  const [error, setError] = useState({
+    image: false,
+    title: false,
+    description: false,
+    team: false,
+    tags: false,
+});
+
   const [isLoading, setIsLoading] = useState(false)
 
   if(!isLoad && !isAuth) {
@@ -28,6 +36,15 @@ export function CreatePinPage() {
     return <Navigate to='/auth/login'/>
   }
 
+    const handleFocus = () => {
+      setError({
+        image: false,
+        title: false,
+        description: false,
+        team: false,
+        tags: false,
+    })
+    }
 
     const handleUploadPinForm = (image) => {
         setFormData((prevData) => ({ ...prevData, image }));
@@ -42,14 +59,21 @@ export function CreatePinPage() {
         setIsLoading(true)
         try {
 
+          const { field, isError, messages } = createPinValidate(formData)
+
+          if(isError)  {
+            messages.forEach(message => {
+                toast.error(message)
+            })
+            setError(prevState => ({...prevState, ...field}))
+            return
+        }
 
           const formatData = {
             ...formData,
             photographer : user?._id
 
           }
-
-          
 
           const result = await createPin({ newPin : formatData })
           toast.success('Su pin fue creado sastifactoriamente')
@@ -76,8 +100,8 @@ export function CreatePinPage() {
                 </Button>
             </div>
             <section className='flex flex-col lg:flex-row w-full justify-center items-start gap-y-6 lg:gap-x-14'>
-                <UploadPinForm handleUploadPinForm={handleUploadPinForm} />
-                <DetailPinForm handleDetailPinForm={handleDetailPinForm} />
+                <UploadPinForm handleUploadPinForm={handleUploadPinForm} isError={error.image}/>
+                <DetailPinForm handleDetailPinForm={handleDetailPinForm} isError={error} onFocus={handleFocus}/>
             </section>
         </form>
     );
