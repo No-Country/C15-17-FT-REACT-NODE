@@ -2,7 +2,14 @@ import mongoose from "mongoose";
 
 const publicationSchema = mongoose.Schema({
     image: {
-        type: String, // Puedes cambiar el tipo según tus necesidades (String, Buffer, etc.)
+        url: {
+            type: String,
+            required: true
+        },
+        public_id: {
+            type: String,
+            required: true
+        }
     },
     title: {
         type: String,
