@@ -12,6 +12,7 @@ const Login = () => {
 
 
     const { singin } = useAuth()
+
     const [data, setData] = useState({
         email : '',
         password : ''
@@ -21,6 +22,8 @@ const Login = () => {
         email: false,
         password : false
     })
+
+    const [isLoad, setIsLoad] = useState(false)
 
     const [showPassword, setShowPassword] = useState(false)
 
@@ -41,6 +44,7 @@ const Login = () => {
 
     const onHandleLogin = async (e) => {
         e.preventDefault();
+        setIsLoad(true)
 
         const { field, isError, messages } = loginValidate(data)
 
@@ -62,6 +66,8 @@ const Login = () => {
          })
        }
 
+       setIsLoad(false)
+
     };
 
 
@@ -69,7 +75,7 @@ const Login = () => {
         <div className='content px-6 lg:px-12 bg-radial-blue '>
             <h2 className="font-semibold text-4xl mb-2">PictureFlow</h2>
             <p className=" text-gray-800 font-semibold">Inicia sesion en tu cuenta de PictureFlow</p>
-            <form onSubmit={onHandleLogin} className='py-6 bg-radial-yellow'>
+            <form onSubmit={onHandleLogin} className='py-6 bg-radial-yellow '>
                 <div className='content_label'>
                     <label className='form_label mb-4 '>
                         <span className='label_span font-semibold text-sm mb-1 text'>Correo</span>
@@ -102,7 +108,7 @@ const Login = () => {
                     </label>
                 </div>
                 <div className='content_btn'>
-                    <Button type='submit' color='blue' className='w-full'>
+                    <Button isLoading={isLoad} type='submit' color='blue' className='w-full'>
                         Iniciar sesión
                     </Button>
                     <div className='content_divisor gap-x-4 w-full justify-center py-2'>

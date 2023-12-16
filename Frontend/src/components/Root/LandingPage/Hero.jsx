@@ -6,14 +6,14 @@ export function Hero() {
     <section className="h-[calc(100vh-220px)] overflow-hidden relative">
         
         
-        <h1 className="text-4xl lg:text-5xl font-semibold text-center flex flex-col gap-y-3 text-gray-800">
+        <h1 className="text-4xl lg:text-5xl dt:text-6xl font-semibold text-center flex flex-col gap-y-3 text-gray-800">
             Explora la Grandeza del Fútbol Argentino <br/>
             <span className="text-primary">
                 Tu Plataforma Social Exclusiva
             </span>
         </h1>
 
-        <section className="flex gap-1 lg:gap-x-4">
+        <section className="flex gap-1 lg:gap-x-4 dt:pt-32">
             <picture className="rounded-xl lg:rounded-3xl overflow-hidden mt-16 ">
                 <img className="h-72 lg:h-[28rem] object-cover" src="/images/carp.webp"/>
             </picture>

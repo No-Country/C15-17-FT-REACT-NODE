@@ -14,8 +14,8 @@ export function HomePage () {
     if(isError) return <p>Hubo un error...</p>
     
     return(
-        <section className="pt-6 space-y-6 px-4 lg:px-0 pb-6">
-            <h1 className="text-3xl font-semibold">Pines para tí</h1>
+        <section className="pt-6 space-y-6 px-4 lg:px-0 pb-12 lg:pb-6">
+            <h1 className="text-2xl lg:text-3xl font-semibold">Pines para tí</h1>
             <PinList pins={data}/>
 
             <div className="fixed bottom-4 right-12 hidden lg:block">

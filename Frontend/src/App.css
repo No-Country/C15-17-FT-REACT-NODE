@@ -19,23 +19,13 @@
   color: #333;
   height: 100vh;
   width: 100%;
-  max-width: 430px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 
-form {
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-}
-.content_label {
-  width: 100%;
-}
 .content_label .form_label {
   display: flex;
   flex-direction: column;
@@ -45,21 +35,7 @@ form {
   font-size: 18px;
   margin-left: 10px;
 }
-.input_form {
-  background-color: #fff;
-  color: #222;
-  font-size: 20px;
-  padding-left: 10px;
-  height: 40px;
-  width: 100%;
-  margin-top: 5px;
-  outline: none;
-  border: none;
 
-  box-shadow: 7px 5px 9px -4px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: 7px 5px 9px -4px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 7px 5px 9px -4px rgba(0, 0, 0, 0.75);
-}
 .input_form:focus {
   border-bottom: 3px solid #3498db;
 }
@@ -88,7 +64,6 @@ form {
 }
 .content_divisor {
   display: flex;
-  width: 180px;
   align-items: center;
 }
 .content_divisor .text{
@@ -96,7 +71,7 @@ form {
 }
 .content_divisor .divisor {
   height: 1px;
-  width: 200px;
+  width: 100%;
   background-color: #333;
 }
 

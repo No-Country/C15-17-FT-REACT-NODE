@@ -1,4 +1,5 @@
 import { Input } from "../../UI/Input";
+import { Select } from "./Select";
 
 export function DetailPinForm({ handleDetailPinForm }) {
     const handleInputChange = (e) => {
@@ -6,6 +7,12 @@ export function DetailPinForm({ handleDetailPinForm }) {
         // Llama a la función proporcionada desde CreatePinPage para actualizar el estado allí
         handleDetailPinForm(name, value);
     };
+
+    const handleSelectChange = (values) => {
+        const { name, value } = values
+        handleDetailPinForm(name, value)
+    }
+
 
     return (
         <section className='min-w-full lg:min-w-[38rem] space-y-6'>
@@ -36,12 +43,7 @@ export function DetailPinForm({ handleDetailPinForm }) {
                 <label className='text-sm' htmlFor='team'>
                     Equipo
                 </label>
-                <Input
-                    placeholder='Agrega un enclace'
-                    type='text'
-                    name='team'
-                    onChange={handleInputChange}
-                />
+                <Select onChange={handleSelectChange}/>
             </div>
             <div className='flex flex-col gap-y-2'>
                 <label className='text-sm' htmlFor='hastagh'>

@@ -19,7 +19,7 @@ const { isAuth, isLoading, user } = useAuth()
     
     
     return (
-        <section className='w-full flex flex-col items-center py-12'>
+        <section className='w-full flex flex-col items-center py-12 px-4 lg:px-0'>
 
             <div className='flex flex-col gap-y-2.5 items-center mb-4'>
                 <img src={user?.avatar ? user.avatar : '/images/placeholder.webp'}  className='rounded-full w-32 h-32 object-cover'/>
