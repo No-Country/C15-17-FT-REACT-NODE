@@ -1,11 +1,12 @@
 import { DetailPinForm } from "../../components/User/CreatePin/DetailsPinForm";
 import { UploadPinForm } from "../../components/User/CreatePin/UploadPinForm";
+import { createPin } from "../../services/pins.services";
 import { Button } from "../../components/ui/Button";
 import { useAuth } from "../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import { toast} from 'react-toastify'
 import { useState } from "react";
-import { createPin } from "../../services/pins.services";
+
 
 export function CreatePinPage() {
 
@@ -17,9 +18,9 @@ export function CreatePinPage() {
       description: "",
       team: "",
       tags: "",
-      photographer : user?._id
   });
 
+ 
   const [isLoading, setIsLoading] = useState(false)
 
   if(!isLoad && !isAuth) {
@@ -40,7 +41,17 @@ export function CreatePinPage() {
         e.preventDefault();
         setIsLoading(true)
         try {
-          const result = await createPin({ newPin : formData })
+
+
+          const formatData = {
+            ...formData,
+            photographer : user?._id
+
+          }
+
+          
+
+          const result = await createPin({ newPin : formatData })
           toast.success('Su pin fue creado sastifactoriamente')
           //TODO : controlar los errores del formulario
           console.log(result)
@@ -55,7 +66,7 @@ export function CreatePinPage() {
 
     return (
         <form
-            className='space-y-8 lg:space-y-12 px-4 lg:px-0 w-full pb-4 lg:pb-0'
+            className='space-y-8 lg:space-y-12 px-4 lg:px-0 w-full pb-12 lg:pb-0'
             onSubmit={handleSubmit}
         >
             <div className='border-b border-t border-border-box py-6 flex items-center justify-between w-full'>

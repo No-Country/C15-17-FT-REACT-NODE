@@ -1,9 +1,9 @@
 import { IconChevronDown } from "../../icons/IconChevronDown";
+import { NavLink, Link } from "react-router-dom";
+import { useAuth } from "../../../hooks/useAuth";
 import { DropDown } from '../../shared/Dropdown'
 import { Search } from "../../shared/Search";
 import { Menu } from "@headlessui/react";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../../hooks/useAuth";
 
 
 export function Nav() {
@@ -17,19 +17,37 @@ export function Nav() {
                 <h3 className="font-semibold tracking-widest">LOGO</h3>
                 <ul className="lg:flex gap-x-3 items-center hidden font-semibold ">
                     <li >
-                        <Link to='/' className=" bg-primary text-white hover:text-white transition-all rounded-3xl px-4 py-2">
+                        <NavLink 
+                            to='/'    
+                            className={({ isActive }) =>
+                                isActive
+                                ? "bg-primary text-white  transition-all rounded-3xl px-4 py-2"
+                                : "hover:bg-primary hover:text-white text-black transition-all rounded-3xl px-4 py-2"
+                            }>          
                             Inicio
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to='/' className="hover:bg-primary hover:text-white transition-all rounded-3xl px-4 py-2">
+                        <NavLink 
+                            to='/explore'    
+                            className={({ isActive }) =>
+                                isActive
+                                ? "bg-primary text-white  transition-all rounded-3xl px-4 py-2"
+                                : "hover:bg-primary hover:text-white text-black transition-all rounded-3xl px-4 py-2"
+                            }>          
                             Explorar
-                        </Link>
+                        </NavLink>
                     </li>
                     <li >
-                        <Link to='/pin-create' className="hover:bg-primary hover:text-white transition-all rounded-3xl px-4 py-2">
+                        <NavLink 
+                            to='/pin-create'    
+                            className={({ isActive }) =>
+                                isActive
+                                ? "bg-primary text-white  transition-all rounded-3xl px-4 py-2"
+                                : "hover:bg-primary hover:text-white text-black transition-all rounded-3xl px-4 py-2"
+                            }>          
                             Crear
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
                 <Search />

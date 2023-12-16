@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:8080/api/publication'
 
 export async function getPins () {
-    const data = await fetch('http://localhost:5173/data.json')
+    const data = await fetch(`${API_URL}/traer`)
     const pins = await data.json()
     return pins
 }

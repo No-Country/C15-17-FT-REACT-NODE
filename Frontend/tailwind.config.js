@@ -16,7 +16,10 @@ export default {
       backgroundImage : {
         'grid-players' : 'url(/images/grid.webp)',
        
-      }
+      },
+      screens: {
+        dt: "1440px",
+      },
     },
   },
   plugins: [],
