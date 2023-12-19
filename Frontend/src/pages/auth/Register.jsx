@@ -28,6 +28,8 @@ const Register = () => {
         repeatPassword : false
     })
 
+    const [isLoad, setIsLoad] = useState(false)
+
 
     const [showPassword, setShowPassword] = useState(false)
 
@@ -52,7 +54,7 @@ const Register = () => {
 
     const onHandleRegister = async (e) => {
         e.preventDefault();
-        
+        setIsLoad(true)
         const { field, isError, messages } = registerValidate(data)
 
         if(isError)  {
@@ -60,6 +62,8 @@ const Register = () => {
                 toast.error(message)
             })
             setError(prevState => ({...prevState, ...field}))
+            setIsLoad(false)
+
             return
         }
 
@@ -79,6 +83,9 @@ const Register = () => {
                 email : true
             }))
         }
+
+        setIsLoad(false)
+
         
        
     };
@@ -155,7 +162,7 @@ const Register = () => {
                 </div>
             </div>
             <div className='content_btn'>
-                <Button type='submit' color='blue' className='w-full'>
+                <Button isLoading={isLoad} type='submit' color='blue' className='w-full'>
                     Registrarse
                 </Button>
                 <div className='content_divisor gap-x-4 w-full justify-center py-2'>

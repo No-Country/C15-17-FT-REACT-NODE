@@ -1,11 +1,10 @@
 import { IconArrowLightDown } from "../../icons/IconArrowLightDown";
-import { IconZoomScan } from "../../icons/IconZoomScan";
-import { ButtonIcon } from "../../ui/ButtonIcon";
 import { useAuth } from "../../../hooks/useAuth";
 import { InputComment } from "./InputComment";
 import { ButtonLike } from "./ButtonLike";
 import { Button } from "../../ui/Button";
 import { Comment } from "./Comment";
+import { Pin } from "./Pin";
 
 export function DetailPin({ pin }) {
 
@@ -13,12 +12,10 @@ export function DetailPin({ pin }) {
 
   return (
     <article className="grid grid-cols-1 lg:grid-cols-2 w-full  pt-6 lg:px-44 gap-6  ">
-                <picture className="w-72 lg:w-[28rem] lg:rounded-tl-3xl lg:rounded-bl-3xl h-auto overflow-hidden mx-auto lg:mx-0 relative">
-                    <img src={pin.image.url} />
-                    <ButtonIcon className='absolute bottom-4 right-4 p-3 bg-gray-100/80 hover:bg-gray-100'>
-                        <IconZoomScan />
-                    </ButtonIcon>
-                </picture>
+
+               
+                <Pin pinImage={pin.image.url}/>
+
                 <section className="flex flex-col gap-y-6   ">
                     
                     <div className="flex justify-between items-center w-full">
@@ -89,6 +86,7 @@ export function DetailPin({ pin }) {
                             </div>
                         </div>
                 </section>
+
             </article>
   )
 }

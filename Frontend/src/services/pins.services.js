@@ -12,6 +12,12 @@ export async function getPin ({ id }) {
     return pins
 }
 
+export async function getPinsByUser ({ userId }) {
+    const data = await fetch(`${API_URL}/user/${userId}`)
+    const pins = await data.json()
+    return pins
+}
+
 export async function getPinsByTeam ({ team }) {
     const data = await fetch(`${API_URL}/traer/team/${team}`)
     const pins = await data.json()
