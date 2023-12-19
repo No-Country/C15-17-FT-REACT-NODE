@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { uploadImage } from "../libs/cloudinary.js";
 import  publications  from "../models/publications.js";
+import Team from '../models/team.js'
 import fs from "fs-extra";
 
 
@@ -23,10 +24,42 @@ export const allPublications = async (req, res) => {
     }
 };
 
+export const getPublicationById = async (req, res) => {
+
+    const { id } = req.params
+
+    try {
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({error : "ID de la publicacion no válido"});
+        }
+
+        const publication = await publications.findById(id)
+        .populate("team", {
+            teamName : 1
+        })
+        .populate("photographer", {
+            _id: 1,
+            username: 1,
+            name: 1,
+            lastName: 1,
+            avatar: 1
+        });
+
+        if(!publication) return res.status(404).json({ error: "Publicación no encontrada" });
+
+        
+        return res.status(201).json(publication);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).send({ message: error })
+    }
+}
+
 export const deletePublication = async (req, res) => {
     const { id } = req.params
     try {
-        if (!mongoose.Types.ObjectId.isValid(team)) {
+        if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({error : "ID de la publicacion no válido"});
         }
           const deletedPublication = await publications.findOneAndDelete({ _id: id });
@@ -56,19 +89,23 @@ export const getPublicationsByTeam = async (req, res) => {
             return res.status(400).json({error : "ID de la publicacion no válido"});
         }
 
+        const teamFound = await Team.findById(team)
+
+        if (!teamFound)return res.status(400).json({error : "El equipo no existe"});
+
         const publicationsByTeam = await publications.find({ 'team': team })
         .populate("photographer", {
             _id: 1,
             name: 1,
             lastName: 1,
             avatar: 1
+        })
+        ;
+
+        return res.status(200).json({
+            team : teamFound,
+            teams : publicationsByTeam
         });
-
-        if (publicationsByTeam.length === 0) {
-            return res.status(404).json({ error: "No hay publicaciones para este equipo" });
-        }
-
-        return res.status(200).json(publicationsByTeam);
 
     } catch (error) {
         return res.status(500).send({ error })

@@ -9,7 +9,6 @@ export function HomePage () {
     const { data, isLoading, isError } = usePins()
 
 
-
     if(isLoading) return <p>Cargando...</p>
     if(isError) return <p>Hubo un error...</p>
     

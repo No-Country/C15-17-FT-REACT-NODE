@@ -6,6 +6,18 @@ export async function getPins () {
     return pins
 }
 
+export async function getPin ({ id }) {
+    const data = await fetch(`${API_URL}/traer/${id}`)
+    const pins = await data.json()
+    return pins
+}
+
+export async function getPinsByTeam ({ team }) {
+    const data = await fetch(`${API_URL}/traer/team/${team}`)
+    const pins = await data.json()
+    return pins
+}
+
 export async function createPin ({ newPin }) {
     const form = new FormData()
 
