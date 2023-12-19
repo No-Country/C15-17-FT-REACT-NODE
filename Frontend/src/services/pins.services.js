@@ -38,3 +38,50 @@ export async function createPin ({ newPin }) {
     return result
 
 }
+
+export async function createComment ({ pinId, newComment}) {
+
+
+    const config = {
+        method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newComment),
+    }
+
+    const data = await fetch(`${API_URL}/comments/${pinId}`, config)
+    const pin = await data.json()
+    return pin
+}
+
+export async function likePost ({ pinId, userId }) {
+    const config = {
+        method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId
+          }),
+    }
+
+    const data = await fetch(`${API_URL}/likes/${pinId}`, config)
+    const pin = await data.json()
+    return pin
+
+}
+
+export async function deleteLikePost ({ pinId, userId }) {
+    const config = {
+         method: "DELETE",
+          headers: {
+              "Content-Type": "application/json",
+          },
+    }
+
+    const data = await fetch(`${API_URL}/likes/${pinId}/${userId}`, config)
+    const pin = await data.json()
+    return pin
+
+}

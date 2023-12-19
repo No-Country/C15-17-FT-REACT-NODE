@@ -15,6 +15,27 @@ const publicationSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    comments : [
+        {
+            userId : {
+                type : String,
+                ref : "User"
+            },
+            comment : {
+                type : String,
+                required : true
+            },
+            date : Date
+        }
+    ],
+    likes : [
+        {
+            userId: {
+                type : String,
+                ref : "User"
+            }
+        }
+    ],
     description: {
         type: String,
         required: true,
