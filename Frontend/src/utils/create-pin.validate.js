@@ -1,7 +1,7 @@
 const messagesError = {
     minTitle : 'El titulo debe tener mas de 4 caracteres',
     emptyFields : 'Los campos no deben estar vacios, intentelo de nuevo',
-    maxTitle : 'El titulo no debe ser mayor a 20 caracteres',
+    maxTitle : 'El titulo no debe ser mayor a 35 caracteres',
     minDescription : 'La descripción debe tener mas de 10 caracteres',
     imageFormat : 'La imagen solo puede tener el formato de JPEG, WEBP, PNG, JPG'
 }
@@ -47,7 +47,7 @@ export function createPinValidate (data) {
        error.messages = [...error.messages, message] 
     }
 
-    if (title.length >= 20 ) {
+    if (title.length >= 35 ) {
         error.isError = true
         error.field = {
             ...error.field,

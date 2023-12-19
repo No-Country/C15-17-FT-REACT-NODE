@@ -9,6 +9,7 @@ import { ExplorePage } from './pages/home/ExplorePage'
 import { LandingPage } from './pages/home/LandingPage'
 import { PerfilPage } from './pages/User/PerfilPage'
 import { HomePage } from './pages/home/HomePage'
+import { TeamPage } from './pages/home/TeamPage'
 import Register from './pages/auth/Register'
 import Login from './pages/auth/Login'
 
@@ -30,6 +31,7 @@ function App() {
 
                 <Route index element={ isAuth ? <HomePage /> : <LandingPage />}/>
                 <Route path='explore' element={<ExplorePage />}/>
+                <Route path='explore/team/:team' element={<TeamPage />}/>
                 <Route path='pin-create' element={<CreatePinPage />}/>
                 <Route path='settings-perfil' element={<EditPerfilPage />}/>
                 <Route path='perfil' element={<PerfilPage />}/>

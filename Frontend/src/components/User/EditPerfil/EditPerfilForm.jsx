@@ -19,6 +19,8 @@ export function EditPerfilForm () {
     description : ''
   })
 
+  const [isLoad, setIsLoad] = useState(false)
+
   useEffect(() => {
     if(user) {
       setData(user)
@@ -40,20 +42,23 @@ export function EditPerfilForm () {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setIsLoad(true)
     try {
-      
       const update = {
         id : user?._id,
         data
       }
 
       const response = await updateUser(update)
-
       console.log(response)
+      setData(response)
+      toast.success('Perfil actualizado')
 
     } catch (error) {
       console.log(error)
       toast.error('Ocurrio un error en los servidores de PictureFlow')
+    } finally {
+      setIsLoad(false)
     }
 
   }
@@ -130,7 +135,7 @@ export function EditPerfilForm () {
         </section>
 
         <div className="w-full h-16 fixed bottom-0 left-0 flex items-center justify-center bg-white gap-x-4">
-          <Button>Restablecer</Button>
+          <Button isLoading={isLoad}>Restablecer</Button>
           <Button type='submit' color='blue'>Guardar</Button>
         </div>
 
