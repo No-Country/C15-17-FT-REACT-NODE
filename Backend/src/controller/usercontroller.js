@@ -75,7 +75,7 @@ export const updateUser = async (req, res) => {
             id,
             toUpdate,
             { new: true } // Devuelve el documento actualizado
-        );
+        ).select('-password');
         
 
         if (!updatedUser) {
