@@ -7,13 +7,14 @@ import fs from "fs-extra";
 
 export const allPublications = async (req, res) => {
     try {
-        const photo = await publications.find().populate("photographer", {
+        const photo = await publications.find()
+        .populate("photographer", {
             _id: 1,
             username: 1,
             name: 1,
             lastName: 1,
             avatar: 1
-        });
+        })
         if (photo.length === 0) {
             return res.status(201).send({ message: "No hay publicaciones creadas"});
         }
@@ -44,6 +45,10 @@ export const getPublicationById = async (req, res) => {
             name: 1,
             lastName: 1,
             avatar: 1
+        })
+        .populate("comments.userId", {
+            "username" : 1,
+            "avatar" : 1
         });
 
         if(!publication) return res.status(404).json({ error: "Publicación no encontrada" });
@@ -154,4 +159,163 @@ export const newPublication = async (req, res) => {
     }
 };
 
+export const createComment = async (req, res) => {
+    const { postId } = req.params;
+    const { comment, userId, date } = req.body;
 
+    try {
+        if (!mongoose.Types.ObjectId.isValid(postId) || !mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "La ID de los parámetros y los datos no son correctos" });
+        }
+
+        const newComment = {
+            userId: userId,
+            comment: comment,
+            date: date || new Date(),
+        };
+
+        const updatedPost = await publications.findByIdAndUpdate(
+            postId,
+            {
+                $push: { comments: newComment }, 
+            },
+            { new: true } 
+        );
+
+        // Verificar si el post existe
+        if (!updatedPost) {
+            return res.status(404).json({ error: "El post no fue encontrado" });
+        }
+
+        return res.status(200).json(updatedPost);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: error.message || "Error al agregar el comentario" });
+    }
+};
+
+export const getCommentsByPost = async (req, res) => {
+    const { postId } = req.params;
+
+    try {
+        if (!mongoose.Types.ObjectId.isValid(postId)) {
+            return res.status(400).json({ error: "La ID de la publicación no es válida" });
+        }
+
+        const post = await publications.findById(postId).populate("comments.userId", {
+            "username" : 1,
+            "avatar" : 1
+        });
+
+        if (!post) {
+            return res.status(404).json({ error: "El post no fue encontrado" });
+        }
+
+        const comments = post.comments || [];
+
+        return res.status(200).json(comments);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: error.message || "Error al encontrar los comentarios" });
+    }
+};
+
+export const deleteComment = async (req, res) => {
+    const { postId, commentId } = req.params;
+
+    try {
+        if (!mongoose.Types.ObjectId.isValid(postId) || !mongoose.Types.ObjectId.isValid(commentId)) {
+            return res.status(400).json({ error: "La ID del post o del comentario no es válida" });
+        }
+
+        const updatedPost = await publications.findByIdAndUpdate(
+            postId,
+            {
+                $pull: { comments: { _id: commentId } }, // Utilizamos $pull para quitar el comentario del array
+            },
+            { new: true } // Esto devuelve el documento actualizado
+        );
+
+        if (!updatedPost) {
+            return res.status(404).json({ error: "El post no fue encontrado" });
+        }
+
+        return res.status(200).json(updatedPost);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: error.message || "Error al eliminar el comentario" });
+    }
+};
+
+export const likePost = async (req, res) => {
+    const { postId } = req.params;
+    const { userId } = req.body;
+
+    try {
+        if (!mongoose.Types.ObjectId.isValid(postId) || !mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "La ID de los parámetros y los datos no son correctos" });
+        }
+
+        const post = await publications.findById(postId);
+
+        if (!post) {
+            return res.status(404).json({ error: "El post no fue encontrado" });
+        }
+
+        const userLiked = post.likes.some((like) => like.userId.toString() === userId);
+
+        if (userLiked) {
+            return res.status(400).json({ error: "El usuario ya ha dado like en esta publicación" });
+        }
+
+        const newLike = {
+            userId: userId,
+        };
+
+        const updatedPost = await publications.findByIdAndUpdate(
+            postId,
+            {
+                $push: { likes: newLike },
+            },
+            { new: true }
+        );
+
+        if (!updatedPost) {
+            return res.status(404).json({ error: "El post no fue encontrado" });
+        }
+
+        return res.status(200).json(updatedPost);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: error.message || "Error al dar me gusta ala publicacion" });
+    }
+};
+
+export const deleteLikePost = async (req, res) => {
+    const { postId, userId } = req.params;
+
+    try {
+
+        if (!mongoose.Types.ObjectId.isValid(postId) || !mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({ error: "La ID de los parámetros y los datos no son correctos" });
+        }
+
+        const updatedPost = await publications.findByIdAndUpdate(
+            postId,
+            {
+                $pull: { likes: { userId: userId } }, // Utilizamos $pull para quitar el like del array
+            },
+            { new: true } // Esto devuelve el documento actualizado
+        );
+
+        if (!updatedPost) {
+            return res.status(404).json({ error: "El post no fue encontrado" });
+        }
+
+        return res.status(200).json(updatedPost);
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: error.message || "Error al eliminar el like de la publicación" });
+    }
+};
