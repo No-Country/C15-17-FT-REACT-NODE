@@ -1,4 +1,4 @@
-import { createComment } from '../../../services/pins.services'
+import { useCommentPin } from '../../../hooks/usePins'
 import { useAuth } from '../../../hooks/useAuth'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -9,22 +9,22 @@ export function InputComment() {
   const { id } = useParams()
   const { user } = useAuth()
 
+  
+  const commentMutation = useCommentPin()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const form = e.target.elements
     const commentValue = form.comment;
     try {
+
         const newComment = {
             userId : user._id,
             comment : commentValue.value
         }
 
-        console.log(newComment)
+       await commentMutation.mutateAsync({ pinId : id, newComment })
 
-        const response = await createComment({pinId : id, newComment}) 
-
-        console.log(response)
     } catch (error) {
         console.log(error)
         toast.error('Algo salio mal en el servidor')
@@ -32,8 +32,6 @@ export function InputComment() {
 
         commentValue.value = '';
     }
-
-    
 
   }
 

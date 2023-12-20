@@ -53,17 +53,20 @@ const Login = () => {
                 toast.error(message)
             })
             setError(prevState => ({...prevState, ...field}))
+            setIsLoad(false)
+
             return
         }
 
        const response = await singin(data)
-
-       if (response.error) {
+        console.log(response)
+       if (response?.error) {
          toast.error(response.error)
          setError({
             email : true,
             password : true
          })
+
        }
 
        setIsLoad(false)

@@ -1,5 +1,5 @@
 import { useTeams } from "../../../hooks/useTeams"
-import { useState, useMemo, Fragment, useEffect } from "react"
+import { useState, useMemo, Fragment } from "react"
 import { Combobox, Transition } from "@headlessui/react"
 import { IconSelector } from "../../icons/IconSelector"
 import { IconCheck } from "../../icons/IconCheck"
@@ -8,9 +8,11 @@ import { IconCheck } from "../../icons/IconCheck"
 
 export function Select({ onChange }) {
 
-    const { data, isLoading } = useTeams();
+    const { data } = useTeams();
 
-    const [selected, setSelected] = useState([]);
+    const [selected, setSelected] = useState({
+      teamName : ''
+    });
 
     const [query, setQuery] = useState('');
 
@@ -23,11 +25,7 @@ export function Select({ onChange }) {
         })
     }
 
-    useEffect(() => {
-        if (!isLoading && data && data.length > 0) {
-          setSelected(data[0]);
-        }
-      }, [isLoading, data]);
+  
     
     const onFilter = (query, data) => {
       const filtered = query === '' ? data : data.filter((team) =>
@@ -41,8 +39,8 @@ export function Select({ onChange }) {
     };
     
     const filteredTeams = useMemo(() => {
-      return onFilter(query, data || []); // Use an empty array if data is undefined
-    }, [query, data]); // Add an empty array as a fallback dependency
+      return onFilter(query, data || []); 
+    }, [query, data]);
     
     
 
@@ -52,8 +50,8 @@ export function Select({ onChange }) {
         <div className="relative mt-1">
             <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
-                className="border-border-box border-2 rounded-3xl px-4 py-2  focus:outline-sky-400 focus:outline-8 w-full"
-                displayValue={(team) => team.teamName}
+                className={`border-border-box border-2 rounded-3xl px-4 py-2  focus:outline-sky-400 focus:outline-8 w-full ${!selected.teamName && 'text-gray-400'}`}
+                displayValue={(team) => team.teamName ? team.teamName : 'Selecciona un equipo'}
                 onChange={(event) => setQuery(event.target.value)}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">

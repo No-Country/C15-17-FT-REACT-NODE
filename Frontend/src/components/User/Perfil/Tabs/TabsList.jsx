@@ -2,6 +2,7 @@ import { classNames } from "../../../../utils/classNames";
 import { Tab } from "@headlessui/react";
 import { Created } from "./Created";
 import { Saves } from "./Saves";
+import { Actions } from "../Actions";
 
 export function TabsList () {
     return (
@@ -28,6 +29,7 @@ export function TabsList () {
                         Guardados
                     </Tab>
                 </Tab.List>
+                <Actions />
                 <Tab.Panels className="mt-2">
                     <Tab.Panel>
                         <Created />

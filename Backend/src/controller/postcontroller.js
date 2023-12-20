@@ -118,6 +118,30 @@ export const getPublicationsByTeam = async (req, res) => {
 
 }
 
+export const getPublicationsByUser = async (req, res) => {
+    const { userId } = req.params
+    try {
+
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({error : "ID del usuario no valido"});
+        }
+
+        const publicationsFound = await publications.find({photographer : userId})
+        .populate("photographer", {
+            _id: 1,
+            name: 1,
+            lastName: 1,
+            avatar: 1
+        })
+
+
+        return res.status(200).json(publicationsFound);
+
+    } catch (error) {
+        return res.status(500).send({ error })
+    }
+}
+ 
 export const newPublication = async (req, res) => {
     try {
     
@@ -158,6 +182,8 @@ export const newPublication = async (req, res) => {
         return res.status(400).send({ message: error })        
     }
 };
+
+
 
 export const createComment = async (req, res) => {
     const { postId } = req.params;

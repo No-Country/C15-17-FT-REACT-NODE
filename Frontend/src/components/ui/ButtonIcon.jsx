@@ -15,7 +15,7 @@ const buttonColors = {
 }
 
 
-export function ButtonIcon ({ children, type, className, color }) {
+export function ButtonIcon ({ children, type, className, color, onClick }) {
 
 
 
@@ -26,7 +26,7 @@ export function ButtonIcon ({ children, type, className, color }) {
 
 
     return (
-        <button type={typeFormat} className={`p-0.5 rounded-full  ${colorFormat.color} ${colorFormat.hover} transition-all ${className}`}>
+        <button onClick={onClick} type={typeFormat} className={`p-0.5 rounded-full  ${colorFormat.color} ${colorFormat.hover} transition-all ${className}`}>
             {children}
         </button>
     )

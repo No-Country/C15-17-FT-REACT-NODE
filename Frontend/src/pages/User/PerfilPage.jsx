@@ -1,6 +1,5 @@
 import { TabsList } from '../../components/User/Perfil/Tabs/TabsList'
 import { PinsList } from '../../components/User/Perfil/PinsList'
-import { Actions } from '../../components/User/Perfil/Actions'
 import { LinkButton } from '../../components/UI/LinkButton'
 import { useAuth } from '../../hooks/useAuth'
 import { Navigate } from 'react-router-dom'
@@ -12,10 +11,13 @@ export function PerfilPage () {
 
 const { isAuth, isLoading, user } = useAuth()
 
+  if(isLoading) return <p>Cargando...</p>
+
   if(!isLoading && !isAuth) {
     toast.error('Para acceder debes autenticarte')
     return <Navigate to='/auth/login'/>
   }
+  
     
     
     return (
@@ -38,9 +40,6 @@ const { isAuth, isLoading, user } = useAuth()
 
             
             <TabsList />
-        
-            <Actions />
-
             
             <PinsList />
 

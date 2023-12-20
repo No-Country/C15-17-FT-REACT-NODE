@@ -9,7 +9,8 @@ import {
     getCommentsByPost,
     deleteComment,
     likePost,
-    deleteLikePost
+    deleteLikePost,
+    getPublicationsByUser,
 } from "../controller/postcontroller.js";
 
 const router = express.Router();
@@ -17,6 +18,7 @@ const router = express.Router();
 router.get("/traer/team/:team", getPublicationsByTeam);
 router.get("/traer", allPublications);
 router.get("/traer/:id", getPublicationById);
+router.get("/user/:userId", getPublicationsByUser);
 router.post("/crear", newPublication);
 router.delete("/:id", deletePublication);
 
