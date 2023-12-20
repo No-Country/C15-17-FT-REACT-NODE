@@ -15,8 +15,17 @@ const userSchema = mongoose.Schema({
         type : String
     },
     email: {type: String, required: true},
-    password: {type: String, required: true }
+    password: {type: String, required: true },
+    saves : [
+       {
+         pinId : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref : "Publication"
+         }
+       }
+    ]
 });
+
 
 const User = mongoose.model("User", userSchema);
 
