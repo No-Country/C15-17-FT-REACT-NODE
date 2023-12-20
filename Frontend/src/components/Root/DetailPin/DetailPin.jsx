@@ -54,7 +54,7 @@ export function DetailPin({ pin }) {
                                     <IconArrowLightDown />
                                 </div>
 
-                                <section className="grid grid-cols-1 gap-y-8 ">
+                                <section className="grid grid-cols-1 gap-y-4 ">
                                 {
                                     !pin.comments.length 
                                     ? <p className="text-gray-400">Todavía no hay comentarios. Agrega uno para iniciar la conversación.</p>

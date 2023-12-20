@@ -47,7 +47,6 @@ export async function createPin ({ newPin }) {
 
 export async function createComment ({ pinId, newComment}) {
 
-
     const config = {
         method: "POST",
           headers: {
@@ -57,6 +56,20 @@ export async function createComment ({ pinId, newComment}) {
     }
 
     const data = await fetch(`${API_URL}/comments/${pinId}`, config)
+    const pin = await data.json()
+    return pin
+}
+
+export async function deleteComment ({ pinId, commentId }) {
+
+    const config = {
+        method: "DELETE",
+          headers: {
+              "Content-Type": "application/json",
+          },
+    }
+
+    const data = await fetch(`${API_URL}/comments/${pinId}/${commentId}`, config)
     const pin = await data.json()
     return pin
 }
