@@ -54,6 +54,16 @@ export function CreatePinPage() {
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
+    const resetFields = () => {
+      setFormData({
+        image: null,
+        title: "",
+        description: "",
+        team: "",
+        tags: "",
+      })
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true)
@@ -66,6 +76,8 @@ export function CreatePinPage() {
                 toast.error(message)
             })
             setError(prevState => ({...prevState, ...field}))
+            setIsLoading(false)
+
             return
         }
 
@@ -85,6 +97,7 @@ export function CreatePinPage() {
 
         } finally {
           setIsLoading(false)
+          resetFields()
         }
       };
 
