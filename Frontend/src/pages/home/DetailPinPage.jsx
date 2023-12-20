@@ -17,16 +17,12 @@ export function DetailPagePin () {
   const {data : pin, isLoading : isLoadPin} = usePinsById({ id })
   const {data, isLoading} = usePins()
   
-
-    
-
-  if(!isLoad && !isAuth) {
-    toast.error('Para acceder debes autenticarte')
-    return <Navigate to='/auth/login'/>
-  }
-
-
     if(isLoading || isLoadPin) return <div>Loading...</div>
+
+    if(!isLoad && !isAuth) {
+        toast.error('Para acceder debes autenticarte')
+        return <Navigate to='/auth/login'/>
+      }
 
     return (
         <section className="relative px-4 lg:px-0">

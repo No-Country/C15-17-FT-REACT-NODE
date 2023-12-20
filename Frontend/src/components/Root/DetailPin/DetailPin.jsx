@@ -1,4 +1,5 @@
 import { IconArrowLightDown } from "../../icons/IconArrowLightDown";
+import { ButtonSave } from "../../shared/ButtonSave";
 import { useAuth } from "../../../hooks/useAuth";
 import { InputComment } from "./InputComment";
 import { ButtonLike } from "./ButtonLike";
@@ -20,7 +21,7 @@ export function DetailPin({ pin }) {
                     
                     <div className="flex justify-between items-center w-full">
                         <div>...</div>
-                        <Button color='blue' >Guardar</Button>
+                        <ButtonSave pinId={pin._id}/>
                     </div>
 
                      
