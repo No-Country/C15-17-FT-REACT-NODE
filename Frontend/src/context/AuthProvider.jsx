@@ -61,7 +61,7 @@ export function AuthProvider ({ children }) {
         return expirationDate;
       };
 
-        const singin = async (credentials) => {
+      const singin = async (credentials) => {
             try {
                 const response = await api.singin({ credentials })
                 if( response.error ) {
@@ -92,9 +92,9 @@ export function AuthProvider ({ children }) {
                 toast.error('Ocurrio un erro en los servidores de PictureFlow')
     
             }
-        }
+      }
 
-        const signup =  async (credentials) => {
+      const signup =  async (credentials) => {
             try {
                 const response = await api.signup({ credentials })
 
@@ -122,9 +122,9 @@ export function AuthProvider ({ children }) {
                 });
                 toast.error('Ocurrio un erro en los servidores de PictureFlow')
             }
-        }
+      }
 
-        const signout = () => {
+      const signout = () => {
             Cookies.remove('token')
             setData({
                 user : {},
@@ -132,20 +132,51 @@ export function AuthProvider ({ children }) {
             });
             navigate('/')
             toast.success('Nos vemos! PictureFlow te espera.' )
+      }
+
+      const onSave = ({ saves }) => {
+        const dataUser = structuredClone(data.user)
+        const newSaves = {
+          ...dataUser,
+          saves
         }
 
-        return (
-            <AuthContext.Provider
+        setData(prevValues => ({
+          ...prevValues,
+          user : newSaves
+        }))
+      }
+
+      const onEditUser = ({ newCredentials }) => {
+        const dataUser = structuredClone(data.user);  // Suponiendo que structuredClone funciona como se espera
+      
+        const updateUser = {
+          ...dataUser,
+          ...newCredentials,
+        };
+      
+        console.log('Aca esta lo del context', updateUser);
+      
+        setData((prevValues) => ({
+          ...prevValues,
+          user: updateUser,
+        }));
+      }
+
+      return (
+          <AuthContext.Provider
               value={{
                 isAuth : data.isAuth,
                 user : data.user,
                 isLoading,
                 signout,
                 singin,
-                signup
+                signup,
+                onSave,
+                onEditUser
               }}
             >
               {children}
-            </AuthContext.Provider>
-          );
+          </AuthContext.Provider>
+        );
 }

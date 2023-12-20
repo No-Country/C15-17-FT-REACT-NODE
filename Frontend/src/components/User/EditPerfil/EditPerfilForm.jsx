@@ -1,31 +1,18 @@
 
 import { updateUser } from "../../../services/user.services";
 import { useAuth } from "../../../hooks/useAuth";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "../../ui/Button";
-import { Input } from "../../UI/Input";
 import { toast } from "react-toastify";
 
 export function EditPerfilForm () {
   
-  const { user } = useAuth()
+  const { user, onEditUser } = useAuth()
 
 
-  const [data, setData] = useState({
-    username : '',
-    name : '',
-    lastName : '',
-    avatar : null,
-    description : ''
-  })
+  const [data, setData] = useState(user)
 
   const [isLoad, setIsLoad] = useState(false)
-
-  useEffect(() => {
-    if(user) {
-      setData(user)
-    }
-  }, [user])
 
 
   const handleChange = (e) => {
@@ -50,6 +37,7 @@ export function EditPerfilForm () {
       }
 
       const response = await updateUser(update)
+      onEditUser({ newCredentials : response })
       console.log(response)
       setData(response)
       toast.success('Perfil actualizado')
@@ -89,23 +77,25 @@ export function EditPerfilForm () {
 
             <div className="flex flex-col gap-y-2">
               <label className="text-sm">Nombre(s)</label>
-              <Input
+              <input 
                 value={data.name}
-                onChange={handleChange} 
-                type='text'
-                placeholder='Agrega tu nombre'
+                placeholder='Agregue su nombre'
                 name='name'
+                type={'text'} 
+                className={`border-border-box border-2 rounded-3xl px-4 py-2  focus:outline-sky-400 focus:outline-8 w-full`} 
+                onChange={handleChange}
               />
             </div>
 
             <div className="flex flex-col gap-y-2">
               <label className="text-sm">Apellido</label>
-              <Input
+              <input 
                 value={data.lastName}
-                onChange={handleChange} 
-                type='text'
-                placeholder='Agrega tu apellido'
+                placeholder='Agregue su apellido'
                 name='lastName'
+                type={'text'} 
+                className={`border-border-box border-2 rounded-3xl px-4 py-2  focus:outline-sky-400 focus:outline-8 w-full`} 
+                onChange={handleChange}
               />
             </div>
 
@@ -123,12 +113,13 @@ export function EditPerfilForm () {
 
           <div className="flex flex-col gap-y-2">
               <label className="text-sm">Nombre de usuario</label>
-              <Input
+              <input 
                 value={data.username}
-                onChange={handleChange} 
-                type='text'
-                placeholder='Agrega tu nombre de usuario'
+                placeholder='Agregue su nombre de usuario'
                 name='username'
+                type={'text'} 
+                className={`border-border-box border-2 rounded-3xl px-4 py-2  focus:outline-sky-400 focus:outline-8 w-full`} 
+                onChange={handleChange}
               />
           </div>
 

@@ -8,6 +8,9 @@ export function EditPerfilPage() {
 
   const { isAuth, isLoading } = useAuth()
 
+
+  if(isLoading) return <p>Cargando...</p>
+
   if(!isLoading && !isAuth) {
     toast.error('Para acceder debes autenticarte')
     return <Navigate to='/auth/login'/>

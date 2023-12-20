@@ -1,4 +1,4 @@
-import { createComment, deleteLikePost, getPin, getPins, getPinsByTeam, getPinsByUser, likePost } from '../services/pins.services'
+import { createComment, deleteComment, deleteLikePost, getPin, getPins, getPinsByTeam, getPinsByUser, likePost } from '../services/pins.services'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 export function usePins () {
@@ -106,6 +106,35 @@ export function useCommentPin() {
           queryClient.setQueryData(['pin', pinId], {
             ...pin,
             comments: [...pin.likes, newComment],
+          });
+        }
+
+        // Invalidar la caché del pin para forzar una recarga desde la API
+        queryClient.invalidateQueries(['pin', pinId]);
+      },
+    }
+  );
+}
+
+
+export function useDeleteComment() {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    ({ pinId, commentId }) => {
+      return deleteComment({ pinId, commentId })
+    },
+    {
+      onSettled: (data, error, variables) => {
+        // Actualizar manualmente la caché después de la mutación de "comment"
+        const { pinId, commentId } = variables;
+        const pin = queryClient.getQueryData(['pin', pinId]);
+
+        if (pin) {
+          // Actualizar el pin en la caché local
+          queryClient.setQueryData(['pin', pinId], {
+            ...pin,
+            comments: pin.comments.filter(comment => comment._id !== commentId)
           });
         }
 

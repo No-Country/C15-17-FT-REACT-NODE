@@ -7,49 +7,36 @@ import { Button } from '../ui/Button'
 
 export function ButtonSave({ pinId, ...props }) {
     
-    const { user } = useAuth()
+    const { user, onSave : onSaveUser } = useAuth()
 
     const isSaved = useMemo(() => {
        return user.saves.find(save => save.pinId === pinId)
     }, [pinId, user.saves])
 
-    const [save, setSave] = useState({
-        isSaved : isSaved,
-        isLoad : false
-    }) 
+    const [load, setIsLoad] = useState(false) 
     const onSave = async () => {
-
-        setSave(prevValue => ({
-            ...prevValue,
-            isLoad : true
-        }))
-
+        
+        setIsLoad(true)
         try {
             if (isSaved) {
-                await deleteSave({ userId : user._id, saveId : isSaved._id })
-                setSave(prevValue => ({
-                    ...prevValue,
-                    isSaved : false
-                }))
+                const response = await deleteSave({ userId : user._id, saveId : isSaved._id })
+                onSaveUser({ saves : response.saves })
+                
             } else {
-                await savePin({ userId : user._id,  pinId })
-                setSave(prevValue => ({
-                    ...prevValue,
-                    isSaved : true
-                }))
+                const response = await savePin({ userId : user._id,  pinId })
+                onSaveUser({ saves : response.saves })
+                
             }
         } catch (error) {
             console.log(error)
             toast.error('Algo a salido mal!')
         } finally {
-            setSave(prevValue => ({
-                ...prevValue,
-                isLoad : false
-            }))
+            setIsLoad(false)
+          
         }
     }
 
     return (
-    <Button {...props} isLoading={save.isLoad} color='blue' onClick={onSave}>{save.isSaved ? 'Guardado' : 'Guardar'}</Button>
+    <Button {...props} isLoading={load} color='blue' onClick={onSave}>{isSaved ? 'Guardado' : 'Guardar'}</Button>
   )
 }
