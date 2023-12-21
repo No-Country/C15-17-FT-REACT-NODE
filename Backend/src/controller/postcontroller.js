@@ -183,6 +183,28 @@ export const newPublication = async (req, res) => {
     }
 };
 
+export const searchPublication = async (req, res) => {
+    const { query } = req.query;
+
+    try {
+        if (!query) {
+            return res.status(400).json({ error: "Se requiere un título para la búsqueda." });
+        }
+
+        const result = await publications.searchByTitle(query);
+
+        const populatedResult = await publications.populate(result, {
+            path: "photographer",
+            select: "_id username name lastName avatar"
+        });
+
+        return res.status(200).json(populatedResult);
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Error interno del servidor." });
+    }
+}
+
 
 
 export const createComment = async (req, res) => {

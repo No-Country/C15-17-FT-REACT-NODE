@@ -60,15 +60,12 @@ const publicationSchema = mongoose.Schema({
     },
 });
 
-/* 
-image,
-title,
-description,
-team,
-tags,
-photographer: photographer || null, //userPhoto._id
-time: new Date(),
- */
+// Método estático para buscar publicaciones por título
+publicationSchema.statics.searchByTitle = async function (title) {
+    const publications = await this.find({ title: { $regex: title, $options: "i" } });
+    return publications;
+}
+
 
 const publications = mongoose.model("Publication", publicationSchema);
 

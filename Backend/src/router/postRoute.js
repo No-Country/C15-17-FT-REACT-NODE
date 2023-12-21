@@ -11,6 +11,7 @@ import {
     likePost,
     deleteLikePost,
     getPublicationsByUser,
+    searchPublication
 } from "../controller/postcontroller.js";
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.get("/traer/team/:team", getPublicationsByTeam);
 router.get("/traer", allPublications);
 router.get("/traer/:id", getPublicationById);
 router.get("/user/:userId", getPublicationsByUser);
+router.get("/search", searchPublication);
 router.post("/crear", newPublication);
 router.delete("/:id", deletePublication);
 
