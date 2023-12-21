@@ -1,4 +1,4 @@
-import { createComment, deleteComment, deleteLikePost, getPin, getPins, getPinsByTeam, getPinsByUser, likePost } from '../services/pins.services'
+import { createComment, deleteComment, deleteLikePost, getPin, getPins, getPinsBySearch, getPinsByTeam, getPinsByUser, likePost } from '../services/pins.services'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 export function usePins () {
@@ -58,6 +58,23 @@ export function usePinsById ({ id }) {
 
 }
 
+export function usePinsBySearch ({ search }) {
+
+  ['pinsSearch'],
+  async () => await getPinsBySearch({ search })
+  const { data, isLoading, isError } = useQuery({
+    queryFn : () => getPinsBySearch({search}),
+    queryKey : ['pinsSearch'],
+    enabled : !!search
+  })
+
+  return {
+      data : data,
+      isLoading,
+      isError
+  }    
+
+}
 
 
 export function useLikePinMutation() {

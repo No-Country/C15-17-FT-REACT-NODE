@@ -6,7 +6,7 @@ import { toast} from 'react-toastify'
 
 export function EditPerfilPage() {
 
-  const { isAuth, isLoading } = useAuth()
+  const { isAuth, isLoading, user } = useAuth()
 
 
   if(isLoading) return <p>Cargando...</p>
@@ -22,7 +22,7 @@ export function EditPerfilPage() {
 
         <aside className="border-r border-b border-border-box w-24 py-6 h-full hidden md:flex">
           <section className="h-12 border-b border-border-box w-full flex justify-center ">
-            <Link to='/perfil'>
+            <Link to={`/perfil/${user._id}`}>
               <IconArrow/>
             </Link>
           </section>

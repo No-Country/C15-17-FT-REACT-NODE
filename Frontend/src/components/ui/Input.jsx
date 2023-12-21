@@ -1,6 +1,7 @@
-export function Input ({ placeholder, type, className, name, onChange, onFocus, value }) {
+export function Input ({ placeholder, type, className, name, onChange, onFocus, value, ...inputProps }) {
     return (
         <input 
+            {...inputProps}
             defaultValue={value}
             onFocus={onFocus}
             placeholder={placeholder}

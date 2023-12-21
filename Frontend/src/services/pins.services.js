@@ -24,6 +24,14 @@ export async function getPinsByTeam ({ team }) {
     return pins
 }
 
+export async function getPinsBySearch ({ search }) {
+    const data = await fetch(`${API_URL}/search?query=${search}`)
+    const pins = await data.json()
+    return pins
+}
+
+
+
 export async function createPin ({ newPin }) {
     const form = new FormData()
 

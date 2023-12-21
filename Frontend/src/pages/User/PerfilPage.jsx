@@ -1,22 +1,26 @@
 import { TabsList } from '../../components/User/Perfil/Tabs/TabsList'
-import { PinsList } from '../../components/User/Perfil/PinsList'
 import { LinkButton } from '../../components/UI/LinkButton'
 import { useAuth } from '../../hooks/useAuth'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { toast} from 'react-toastify'
+import { useUserById } from '../../hooks/useUser'
 
 
 export function PerfilPage () {
 
+  const { isLoading, isAuth } = useAuth()  
+  const { userId } = useParams()
 
-const { isAuth, isLoading, user } = useAuth()
+  const { data : user, isLoading : isLoadUser, isError } = useUserById({ userId })
 
-  if(isLoading) return <p>Cargando...</p>
+  if(isLoading || isLoadUser) return <p>Cargando...</p>
 
   if(!isLoading && !isAuth) {
     toast.error('Para acceder debes autenticarte')
     return <Navigate to='/auth/login'/>
   }
+
+  if (isError) return <p>Hubo un error</p>
   
     return (
         <section className='w-full flex flex-col items-center py-12 px-4 lg:px-0'>
@@ -42,7 +46,6 @@ const { isAuth, isLoading, user } = useAuth()
             
             <TabsList />
             
-            <PinsList />
 
         </section>
     )

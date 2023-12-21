@@ -53,14 +53,14 @@ export function Nav() {
                 <Search />
             </nav>
             <div className="hidden lg:flex items-center gap-x-2">
-                <Link to='/perfil' className="w-8 h-8">
+                <Link to={`/perfil/${user._id}`} className="w-8 h-8">
                     <img src={user?.avatar ? user.avatar : '/images/placeholder.webp'} className='rounded-full w-8 h-8 object-cover'/>
                 </Link>
                 <DropDown icon={<IconChevronDown />} label='Opciones'>
                             <Menu.Item >
                                 {({ active }) => (
                                         <Link
-                                            to='/perfil'
+                                            to={`/perfil/${user._id}`}
                                             className={`${
                                             active ? 'bg-gray-200 text-gray-900' : 'text-gray-900'
                                             } group flex w-full items-center px-2 py-2 font-semibold text-base rounded-md`}
