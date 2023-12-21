@@ -1,8 +1,9 @@
 import { IconSearch } from "../icons/IconSearch";
 import { useNavigate } from "react-router-dom";
 import { ModalSearch } from "./ModalSearch";
-import { Input } from "../UI/Input";
 import { useEffect, useState } from "react";
+import { v4 as uuid } from 'uuid';
+import { Input } from "../UI/Input";
 
 export function Search () {
 
@@ -26,17 +27,27 @@ export function Search () {
         
         const searched = JSON.parse(localStorage.getItem('searched')) || []
         const newSearch = {
-            searched : itemSearch
+            searched : itemSearch,
+            id : uuid(),
+            date : new Date()
         }
-        localStorage.setItem('searched', JSON.stringify([
-            ...searched,
-            newSearch
-        ]));
 
-        setHistorial(prevValues => [...prevValues, newSearch])
+        const updatedSearches = [...searched, newSearch]
+        updatedSearches.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        localStorage.setItem('searched', JSON.stringify(updatedSearches));
+
+        setHistorial([...updatedSearches])
 
         navigate(`/search?q=${itemSearch}`)
 
+    }
+
+    const deleteSearchedHistorial = ( id ) => {
+        const hitorialCloned = structuredClone(historial)
+        const historialFiltered = hitorialCloned.filter(historial => historial.id !== id)
+        setHistorial(historialFiltered)
+        localStorage.setItem('searched', JSON.stringify(historialFiltered))
     }
 
 
@@ -60,7 +71,7 @@ export function Search () {
         </form> 
 
 
-        <ModalSearch isFocus={isFocus} search={search} onRedirect={onRedirect} historial={historial}/>
+        <ModalSearch isFocus={isFocus} search={search} onRedirect={onRedirect} historial={historial} deleteSearchHistorial={deleteSearchedHistorial}/>
 
 
       </section>
