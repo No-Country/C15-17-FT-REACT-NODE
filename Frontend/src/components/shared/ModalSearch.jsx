@@ -1,11 +1,11 @@
 import { IconSearch } from "../icons/IconSearch";
-import { LinkButton } from "../ui/LinkButton";
 import { Transition } from "@headlessui/react";
 import { usePins } from "../../hooks/usePins";
 import { Fragment, useMemo } from "react";
+import { HistorialSearchedList } from "./HistorialSearchedList";
 
 
-export function ModalSearch({ isFocus, search, onRedirect, historial }) {
+export function ModalSearch({ isFocus, search, onRedirect, historial, deleteSearchHistorial }) {
 
   const { data, isLoading } = usePins()
 
@@ -17,6 +17,11 @@ export function ModalSearch({ isFocus, search, onRedirect, historial }) {
         .includes(search.toLowerCase().replace(/\s+/g, '')))
 
     return filterPins    
+  }
+
+  const onDeleteSearched = (e, id) => {
+    e.preventDefault();
+    deleteSearchHistorial(id)
   }
 
   const searched = useMemo(() => {
@@ -44,17 +49,7 @@ export function ModalSearch({ isFocus, search, onRedirect, historial }) {
                         <section className="grid gap-4">
                             {
                                 !search.length ?
-                                <div className="flex flex-col gap-y-1 ">
-                                    <p className="font-medium">Busquedas recientes</p>
-                                    <div className="flex items-center gap-x-2">
-                                        {
-                                        
-                                            historial?.map((searched, index) => (
-                                                <LinkButton key={index} href={`/search?q=${searched.searched}`} className='font-normal text-sm'>{searched.searched}</LinkButton>
-                                            ))
-                                        }
-                                    </div>
-                                </div> 
+                                <HistorialSearchedList historial={historial} onDeleteSearched={onDeleteSearched}/>
                                 : 
                                 <>
                                     {
