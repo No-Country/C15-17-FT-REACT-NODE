@@ -7,7 +7,6 @@
 ### Integrantes
 ######  - Emiliano Cabanillas - Front
 ###### -  Ezequiel Colicoy - Back
-###### -  Ezequiel Soto - Front
 ###### -  Jazmin Oballos - QA
 ###### -  Matias Cabrera - Front
 ###### -  Alejandra Chaves  - QA
