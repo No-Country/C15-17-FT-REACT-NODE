@@ -8,20 +8,24 @@ import { useUserById } from '../../hooks/useUser'
 
 export function PerfilPage () {
 
-  const { isLoading, isAuth } = useAuth()  
+  const { isLoading, isAuth, user : userMe } = useAuth()  
   const { userId } = useParams()
 
   const { data : user, isLoading : isLoadUser, isError } = useUserById({ userId })
 
+
+  
   if(isLoading || isLoadUser) return <p>Cargando...</p>
-
+  
   if(!isLoading && !isAuth) {
-    toast.error('Para acceder debes autenticarte')
-    return <Navigate to='/auth/login'/>
+      toast.error('Para acceder debes autenticarte')
+      return <Navigate to='/auth/login'/>
   }
-
+  
   if (isError) return <p>Hubo un error</p>
   
+  const isPermited = userMe._id === user._id
+   
     return (
         <section className='w-full flex flex-col items-center py-12 px-4 lg:px-0'>
 
@@ -34,14 +38,17 @@ export function PerfilPage () {
                 </div>
             </div>
 
-            <div className='flex items-center gap-x-2 mb-10'>
-                <LinkButton href='/settings-perfil'>
-                    Editar perfil
-                </LinkButton>
-                <LinkButton href='/pin-create'>
-                    Crear
-                </LinkButton>
-            </div>
+            {
+                isPermited &&
+                <div className='flex items-center gap-x-2 mb-10'>
+                    <LinkButton href='/settings-perfil'>
+                        Editar perfil
+                    </LinkButton>
+                    <LinkButton href='/pin-create'>
+                        Crear
+                    </LinkButton>
+                </div>
+            }
 
             
             <TabsList />

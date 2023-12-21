@@ -70,6 +70,20 @@ export function Nav() {
                                         </Link>
                                     )}
                                 </Menu.Item>
+
+                                <Menu.Item >
+                                {({ active }) => (
+                                        <Link
+                                            to={`/settings-perfil`}
+                                            className={`${
+                                            active ? 'bg-gray-200 text-gray-900' : 'text-gray-900'
+                                            } group flex w-full items-center px-2 py-2 font-semibold text-base rounded-md`}
+                                        >
+                                            
+                                            Editar perfil
+                                        </Link>
+                                    )}
+                                </Menu.Item>
                     
                                 <Menu.Item >
                                 {({ active }) => (
