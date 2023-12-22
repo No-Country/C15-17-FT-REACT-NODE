@@ -6,6 +6,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { usePinsBySearch } from "../../hooks/usePins"
 import { useAuth } from "../../hooks/useAuth";
 import { toast } from "react-toastify";
+import { Loading } from "../../components/shared/Loading";
 
 export function SearchPage() {
 
@@ -16,15 +17,17 @@ export function SearchPage() {
   const search = searchParams.get('q');    
 
   
-  const { data, isLoading } = usePinsBySearch({ search })  
+  const { data, isLoading, isError } = usePinsBySearch({ search })  
   
   
-  if (isLoading || isLoading) return <p>Cargando...</p>
+  if (isLoading || isLoad) return <Loading title={`Estamos cargando las ideas de "${search}"`}/>
   if (!search) return <Navigate to='/'/>
   if(!isLoad && !isAuth) {
     toast.error('Para acceder debes autenticarte')
     return <Navigate to='/auth/login'/>
   }
+
+  if (isError) return <p className="text-center text-xl font-semibold pt-12 text-gray-400">Hubo un error al traer las ideas, intentalo de nuevo</p>
 
 
   return (

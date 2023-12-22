@@ -16,7 +16,6 @@ export function Search () {
 
     useEffect(() => {
         const searched = JSON.parse(localStorage.getItem('searched'))
-        console.log(searched)
         if(!searched?.length) return
         setHistorial(searched)  
      }, [])

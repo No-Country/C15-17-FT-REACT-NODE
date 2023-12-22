@@ -4,6 +4,7 @@ import { LinkIcon } from "../../components/ui/LinkIcon"
 import { usePinsByTeam } from "../../hooks/usePins"
 import { useParams } from "react-router-dom"
 import { useAuth } from "../../hooks/useAuth"
+import { Loading } from "../../components/shared/Loading"
 
 
 export function TeamPage() {
@@ -11,11 +12,13 @@ export function TeamPage() {
     const { team } = useParams()
 
     const { isAuth } = useAuth()
-    const {data, isLoading} = usePinsByTeam({ team })
+    const {data, isLoading, isError} = usePinsByTeam({ team })
 
-    if (isLoading) return <p>Cargando...</p>
+    if (isLoading) return <Loading title='Cargando las ideas del equipo...'/>
 
     if (!isLoading && !data?.teams?.length) return <p>No hay equipos en esta secion</p>
+
+    if (isError) return <p className="text-center text-xl font-semibold pt-12 text-gray-400">Hubo un error al traer los detalles de la idea, intentalo de nuevo</p>   
 
   return (
     <section className={`flex flex-col gap-y-4 justify-center w-full items-center pb-6 ${!isAuth && 'px-6'}`}>

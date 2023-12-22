@@ -1,4 +1,6 @@
 import { Card } from "../../components/Root/ExplorePage/Card";
+import { Loading } from "../../components/shared/Loading";
+
 import { useAuth } from "../../hooks/useAuth";
 import { useTeams } from "../../hooks/useTeams";
 
@@ -9,8 +11,8 @@ export function ExplorePage() {
   const { data, isLoading, isError } = useTeams()
 
   
-  if(isLoading) return <p>Cargando...</p>
-  if(isError) return <p>Hubo un error...</p>
+  if(isLoading) return <Loading  title='Cargando las seción de equipos...'/>
+  if(isError) return <p className="text-center text-xl font-semibold pt-12 text-gray-400">Hubo un error al traer los equipos, intentalo de nuevo</p>
 
   return (
     <section className={`flex flex-col pt-8 gap-y-0.5 items-center w-full justify-center pb-12 lg:pb-6 text-center ${!isAuth && 'px-8'}`}>

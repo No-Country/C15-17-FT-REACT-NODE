@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { Navigate, useParams } from 'react-router-dom'
 import { toast} from 'react-toastify'
 import { useUserById } from '../../hooks/useUser'
+import { Loading } from '../../components/shared/Loading'
 
 
 export function PerfilPage () {
@@ -13,16 +14,14 @@ export function PerfilPage () {
 
   const { data : user, isLoading : isLoadUser, isError } = useUserById({ userId })
 
-
-  
-  if(isLoading || isLoadUser) return <p>Cargando...</p>
+  if(isLoading || isLoadUser) return <Loading title='Estamos cargando los datos del perfil...'/>
   
   if(!isLoading && !isAuth) {
       toast.error('Para acceder debes autenticarte')
       return <Navigate to='/auth/login'/>
   }
   
-  if (isError) return <p>Hubo un error</p>
+  if (isError) return <p className="text-center text-xl font-semibold pt-12 text-gray-400">Hubo un error al traer los detalles del usuario, intentalo de nuevo</p>   
   
   const isPermited = userMe._id === user._id
    
