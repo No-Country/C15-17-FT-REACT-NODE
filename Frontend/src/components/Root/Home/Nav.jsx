@@ -4,6 +4,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { DropDown } from '../../shared/Dropdown'
 import { Search } from "../../shared/Search";
 import { Menu } from "@headlessui/react";
+import { Logo } from "../../shared/Logo";
 
 
 export function Nav() {
@@ -14,7 +15,7 @@ export function Nav() {
   return (
     <>
             <nav className="flex gap-x-6 items-center  w-full">
-                <h3 className="font-semibold tracking-widest">LOGO</h3>
+                <Logo />
                 <ul className="lg:flex gap-x-3 items-center hidden font-semibold ">
                     <li >
                         <NavLink 
