@@ -16,7 +16,7 @@ export function DetailPin({ pin }) {
   
 
   const [openModal, setOpenModal] = useState(false)  
-  const { user } = useAuth()
+  const { user, isAuth } = useAuth()
 
   const onOpen = () => setOpenModal(!openModal)
 
@@ -31,7 +31,9 @@ export function DetailPin({ pin }) {
                         
                         <div className="flex justify-between items-center w-full">
                             <ButtonIcon onClick={onOpen} className='p-1'><IconDownload /></ButtonIcon>
-                            <ButtonSave pinId={pin._id}/>
+                            {
+                                isAuth && <ButtonSave pinId={pin._id}/>
+                            }
                         </div>
 
                         
@@ -59,45 +61,53 @@ export function DetailPin({ pin }) {
                             </div>
 
                             {/* Comentarios   */}
-                            <div className="space-y-6">
+                            {
+                             !isAuth ? <p className="text-center text-lg text-gray-500 pt-12">Debes conectarte para ver los comentarios! <Link to='/auth/login' className="text-primary hover:underline">Ingresa aquí</Link></p>
+                              :
+                                <div className="space-y-6">
 
-                                    <div className="flex justify-between items-center w-full">
-                                        <h3 className="font-semibold">Comentarios</h3>
-                                        <IconArrowLightDown />
-                                    </div>
+                                        <div className="flex justify-between items-center w-full">
+                                            <h3 className="font-semibold">Comentarios</h3>
+                                            <IconArrowLightDown />
+                                        </div>
 
-                                    <section className="grid grid-cols-1 gap-y-4 ">
-                                    {
-                                        !pin.comments.length 
-                                        ? <p className="text-gray-400">Todavía no hay comentarios. Agrega uno para iniciar la conversación.</p>
-                                        :
-                                        <>
-                                            {
-                                                pin.comments.map(comment => (
-                                                    <Comment key={comment._id} comment={comment}/>
-                                                ))
-                                            }
-                                        </>
-                                    }
-                                    </section>
-                            </div>
+                                        <section className="grid grid-cols-1 gap-y-4 ">
+                                        {
+                                            !pin.comments.length 
+                                            ? <p className="text-gray-400">Todavía no hay comentarios. Agrega uno para iniciar la conversación.</p>
+                                            :
+                                            <>
+                                                {
+                                                    pin.comments.map(comment => (
+                                                        <Comment key={comment._id} comment={comment}/>
+                                                    ))
+                                                }
+                                            </>
+                                        }
+                                        </section>
+                                </div>
+                                
+                            }
 
                         </section>
 
                         {/* Actions Pin */}
-                        <div className="space-y-3">
-                                <div className="flex w-full items-center justify-between">
-                                    <p className="text-xl font-medium">{pin.comments.length} comentarios</p>
-                                    <div className="flex  items-center">
-                                        <p className="font-medium">{pin.likes.length} Me gustas</p>
-                                        <ButtonLike likes={pin.likes}/>
+                        {
+                            isAuth &&
+                            <div className="space-y-3">
+                                    <div className="flex w-full items-center justify-between">
+                                        <p className="text-xl font-medium">{pin.comments.length} comentarios</p>
+                                        <div className="flex  items-center">
+                                            <p className="font-medium">{pin.likes.length} Me gustas</p>
+                                            <ButtonLike likes={pin.likes}/>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="flex gap-x-2 items-center">
-                                    <img src={user?.avatar ? user.avatar : '/images/placeholder.webp'} className='w-10 h-10 object-cover rounded-full'/>
-                                <InputComment />
-                                </div>
+                                    <div className="flex gap-x-2 items-center">
+                                        <img src={user?.avatar ? user.avatar : '/images/placeholder.webp'} className='w-10 h-10 object-cover rounded-full'/>
+                                        <InputComment />
+                                    </div>
                             </div>
+                        }
                     </section>
             
         </article>

@@ -1,9 +1,11 @@
 import { Card } from "../../components/Root/ExplorePage/Card";
+import { useAuth } from "../../hooks/useAuth";
 import { useTeams } from "../../hooks/useTeams";
 
 
 export function ExplorePage() {
 
+  const { isAuth } = useAuth()
   const { data, isLoading, isError } = useTeams()
 
   
@@ -11,7 +13,7 @@ export function ExplorePage() {
   if(isError) return <p>Hubo un error...</p>
 
   return (
-    <section className="flex flex-col pt-8 gap-y-0.5 items-center w-full justify-center pb-12 lg:pb-6 text-center">
+    <section className={`flex flex-col pt-8 gap-y-0.5 items-center w-full justify-center pb-12 lg:pb-6 text-center ${!isAuth && 'px-8'}`}>
       <h3 className="text-xl font-semibold text-gray-800">Explora nuestro futbol</h3>
       <h2 className="text-3xl font-semibold text-gray-900 mb-8">Sigue a tus equipos favoritos</h2>
 

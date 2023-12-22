@@ -3,12 +3,14 @@ import { PinList  } from '../../components/shared/PinList'
 import { LinkIcon } from "../../components/ui/LinkIcon"
 import { usePinsByTeam } from "../../hooks/usePins"
 import { useParams } from "react-router-dom"
+import { useAuth } from "../../hooks/useAuth"
 
 
 export function TeamPage() {
 
     const { team } = useParams()
 
+    const { isAuth } = useAuth()
     const {data, isLoading} = usePinsByTeam({ team })
 
     if (isLoading) return <p>Cargando...</p>
@@ -16,7 +18,7 @@ export function TeamPage() {
     if (!isLoading && !data?.teams?.length) return <p>No hay equipos en esta secion</p>
 
   return (
-    <section className="flex flex-col gap-y-4 justify-center w-full items-center pb-6">
+    <section className={`flex flex-col gap-y-4 justify-center w-full items-center pb-6 ${!isAuth && 'px-6'}`}>
         <LinkIcon className='fixed top-28 left-4 z-50 bg-gray-100/80 p-3 hover:bg-gray-100' href='/explore'>
                 <IconArrowLeft />
         </LinkIcon>
