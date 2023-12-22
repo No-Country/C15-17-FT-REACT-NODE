@@ -3,13 +3,14 @@ import { IconArrow } from "../../components/Icons/IconArrow";
 import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from "../../hooks/useAuth";
 import { toast} from 'react-toastify'
+import { Loading } from "../../components/shared/Loading";
 
 export function EditPerfilPage() {
 
   const { isAuth, isLoading, user } = useAuth()
 
 
-  if(isLoading) return <p>Cargando...</p>
+  if(isLoading) return <Loading title='Cargando tus datos...'/>
 
   if(!isLoading && !isAuth) {
     toast.error('Para acceder debes autenticarte')

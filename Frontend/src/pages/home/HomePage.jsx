@@ -1,7 +1,8 @@
-import { IconAdd } from "../../components/icons/IconAdd"
 import { PinList } from "../../components/shared/PinList"
+import { IconAdd } from "../../components/icons/IconAdd"
 import { LinkIcon } from "../../components/ui/LinkIcon"
 import { usePins } from "../../hooks/usePins"
+import { Loading } from "../../components/shared/Loading"
 
 export function HomePage () {
 
@@ -9,8 +10,8 @@ export function HomePage () {
     const { data, isLoading, isError } = usePins()
 
 
-    if(isLoading) return <p>Cargando...</p>
-    if(isError) return <p>Hubo un error...</p>
+    if(isLoading) return <Loading title='¡Estamos agregando nuevas ideas para ti!'/>
+    if(isError) return <p className="text-center text-xl font-semibold pt-12 text-gray-400">Hubo un error al traer los pines, intentalo de nuevo</p>
     
     return(
         <section className="pt-6 space-y-6 px-4 lg:px-0 pb-12 lg:pb-6">

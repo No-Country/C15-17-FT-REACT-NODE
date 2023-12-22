@@ -1,10 +1,11 @@
+import { MoreToExplore } from "../../components/Root/DetailPin/MoreToExplore"
 import { DetailPin } from "../../components/Root/DetailPin/DetailPin"
 import { IconArrowLeft } from "../../components/icons/IconArrowLeft"
-import { usePins, usePinsById } from "../../hooks/usePins"
-import { PinList } from "../../components/shared/PinList"
+import { Loading } from "../../components/shared/Loading"
 import { LinkIcon } from "../../components/ui/LinkIcon"
-import { useParams } from "react-router-dom"
+import { usePinsById } from "../../hooks/usePins"
 import { useAuth } from "../../hooks/useAuth"
+import { useParams } from "react-router-dom"
 
 
 export function DetailPagePin () {
@@ -13,13 +14,15 @@ export function DetailPagePin () {
 
   const { isLoading : isLoad } = useAuth()
   
-  const {data : pin, isLoading : isLoadPin} = usePinsById({ id })
-  const {data, isLoading} = usePins()
-  
-  if(isLoad || isLoading || isLoadPin ) return <div>Loading...</div>
+  const {data : pin, isLoading : isLoadPin, isError} = usePinsById({ id })
 
+
+  if(isLoad || isLoadPin ) return <Loading title='Cargando los detalles de la idea...'/>
   
 
+  if (isError) return <p className="text-center text-xl font-semibold pt-12 text-gray-400">Hubo un error al traer los detalles de la idea, intentalo de nuevo</p>   
+  
+  
     return (
         <section className="relative px-4 lg:px-0">
             
@@ -28,12 +31,9 @@ export function DetailPagePin () {
             </LinkIcon>
 
             <DetailPin pin={pin}/>
-
-            <section className="flex flex-col gap-y-4 items-center py-12">
-                <h3 className="text-xl font-semibold">Más para explorar</h3>
-                <PinList pins={data}/>
-            </section>
-        
+            
+            <MoreToExplore teamId={pin.team._id} title={pin.title} pinId={pin._id}/>
+           
         </section>
     )
 }

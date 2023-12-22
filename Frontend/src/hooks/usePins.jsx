@@ -43,6 +43,7 @@ export function usePinsByUser ({ userId }) {
 
 }
 
+
 export function usePinsById ({ id }) {
     const { data, isLoading, isError } = useQuery({
         queryFn : () => getPin({ id }),
@@ -57,6 +58,8 @@ export function usePinsById ({ id }) {
     }    
 
 }
+
+
 
 export function usePinsBySearch ({ search }) {
 

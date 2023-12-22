@@ -31,7 +31,6 @@ export async function getPinsBySearch ({ search }) {
 }
 
 
-
 export async function createPin ({ newPin }) {
     const form = new FormData()
 
